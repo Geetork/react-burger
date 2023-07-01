@@ -4,13 +4,21 @@ import { Button,
          CurrencyIcon,
          DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import OrderDetails from '../order-details/order-details';
+
 import constructorStyles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
     const [state, setState] = useState([]);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsVisible(true);
+    };
 
     return (
-        <section className={`${constructorStyles.container} ml-5 pt-25`}>
+        <section style={{ overflow: 'hidden' }} 
+                 className={`${constructorStyles.container} ml-5 pt-25`}>
             <div className={constructorStyles.scroll__container}>
                 <div className={`${constructorStyles.ingredients__list} pr-2`}
                     style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -65,10 +73,16 @@ const BurgerConstructor = () => {
                     <span className="text text_type_main-large pr-2">640</span>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="large">
+                <Button 
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                    onClick={handleOpenModal}>
                     Оформить заказ
                 </Button>
             </div>
+
+            { isVisible && <OrderDetails setIsVisible={setIsVisible}/> }
         </section>
     )
 }

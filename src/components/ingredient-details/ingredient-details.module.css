@@ -1,0 +1,15 @@
+.specification {
+    display: flex;
+    flex-direction: row;
+    width: 516px;
+    justify-content: space-between;
+}
+
+.specification__item {
+    height: 56px;
+    display: flex;
+    flex: 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}

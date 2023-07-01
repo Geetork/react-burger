@@ -26,7 +26,7 @@ Main.propTypes = {
        image: PropTypes.string,
        image_mobile: PropTypes.string,
        image_large: PropTypes.string,
-       __v:0
+       __v: PropTypes.number
     })).isRequired
 };
 

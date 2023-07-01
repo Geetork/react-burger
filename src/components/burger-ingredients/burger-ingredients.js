@@ -2,20 +2,29 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './burger-ingredients.module.css';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const BurgerIngredient = (props) => {
+    const handleOpenModal = () => {
+        props.setModalData({...props.ingredient});
+        props.handleOpenModal();
+    };
+
     return (
-        <div className={`${ingredientsStyles.card} ml-3 mr-3`}>
+        <div className={`${ingredientsStyles.card} ml-3 mr-3`}
+             onClick={handleOpenModal}>
             <Counter count={1} size="default" extraClass="m-1" />
-            <img alt='oops..' src={props.image_large} className={ingredientsStyles.img}/>
+            <img alt='oops..' src={props.ingredient.image_large} 
+                 className={ingredientsStyles.img}/>
             <div className={`${ingredientsStyles.card__price} mt-1 mb-1`}>
                 <span className='text text_type_digits-default pr-1'>
-                    {props.price}
+                    {props.ingredient.price}
                 </span>
                 <CurrencyIcon type="primary" />
             </div>
-            <span style={{ textAlign: 'center' }} className="text text_type_main-default">
-                {props.name}
+            <span style={{ textAlign: 'center' }} 
+                  className="text text_type_main-default">
+                {props.ingredient.name}
             </span>
         </div>
     )
@@ -38,6 +47,12 @@ BurgerIngredient.propTypes = {
 
 const BurgerIngredients = (props) => {
     const [current, setCurrent] = useState('Булки');
+    const [isVisible, setIsVisible] = useState(false);
+    const [modalData, setModalData] = useState({});
+
+    const handleOpenModal = () => {
+        setIsVisible(true);
+    };
 
     const ingredientType = {
         'Булки': 'bun',
@@ -79,11 +94,18 @@ const BurgerIngredients = (props) => {
                 {
                     props.data.map((ingredient, id) => (
                         ingredient.type === ingredientType[current] &&
-                        <BurgerIngredient {...ingredient} key={id}/>
+                        <BurgerIngredient 
+                            handleOpenModal={handleOpenModal}
+                            setModalData={setModalData} 
+                            ingredient={{...ingredient}} 
+                            key={id}/>
                     ))
                 }
                 </div>             
             </div>
+            { isVisible &&
+              <IngredientDetails {...modalData} 
+                                 setIsVisible={setIsVisible}/>}
         </section>
     )
 }
