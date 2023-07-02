@@ -17,7 +17,7 @@ const OrderDetails = (props) => {
 }
 
 OrderDetails.propTypes = {
-    setIsVisible: PropTypes.func
+    setIsVisible: PropTypes.func.isRequired
 };
 
 export default OrderDetails;

@@ -3,46 +3,38 @@ import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
-const BurgerIngredient = (props) => {
-    const handleOpenModal = () => {
-        props.setModalData({...props.ingredient});
-        props.handleOpenModal();
+const BurgerIngredient = ({ingredient, setModalData, handleOpenModal}) => {
+    const openModal = () => {
+        setModalData({...ingredient});
+        handleOpenModal();
     };
 
     return (
         <div className={`${ingredientsStyles.card} ml-3 mr-3`}
-             onClick={handleOpenModal}>
+             onClick={openModal}>
             <Counter count={1} size="default" extraClass="m-1" />
-            <img alt='oops..' src={props.ingredient.image_large} 
+            <img alt='oops..' src={ingredient.image_large} 
                  className={ingredientsStyles.img}/>
             <div className={`${ingredientsStyles.card__price} mt-1 mb-1`}>
                 <span className='text text_type_digits-default pr-1'>
-                    {props.ingredient.price}
+                    {ingredient.price}
                 </span>
                 <CurrencyIcon type="primary" />
             </div>
             <span style={{ textAlign: 'center' }} 
                   className="text text_type_main-default">
-                {props.ingredient.name}
+                {ingredient.name}
             </span>
         </div>
     )
 }
 
-BurgerIngredient.propTypes = {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number
+BurgerIngredient.propTypes = { 
+    ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
+    setModalData: PropTypes.func.isRequired,
+    handleOpenModal: PropTypes.func.isRequired
 };
 
 const BurgerIngredients = (props) => {
@@ -65,7 +57,7 @@ const BurgerIngredients = (props) => {
             <h1 className='text text_type_main-large pt-10 pb-4'>
                 Соберите бургер
             </h1>
-            <div style={{ display: 'flex' }} className='pb-10'>
+            <div className={`${ingredientsStyles.tabs} pb-10`}>
                 <Tab 
                     value="Булки" 
                     active={current === 'Булки'} 
@@ -85,23 +77,28 @@ const BurgerIngredients = (props) => {
                     Начинки
                 </Tab>
             </div>
-            <div className={ingredientsStyles.ingredients}>
-                <h2 className="text text_type_main-medium pb-6">
-                    {current}
-                </h2> 
-                <div className={`${ingredientsStyles.ingredients__list}
-                                 ${ingredientsStyles.scroll__container}`}>
+            <div className={`${ingredientsStyles.ingredients}
+                             ${ingredientsStyles.scroll__container}`}>
                 {
-                    props.data.map((ingredient, id) => (
-                        ingredient.type === ingredientType[current] &&
-                        <BurgerIngredient 
-                            handleOpenModal={handleOpenModal}
-                            setModalData={setModalData} 
-                            ingredient={{...ingredient}} 
-                            key={id}/>
+                    ['Булки', 'Соусы', 'Начинки'].map((title, id) => (
+                        <div key={id}>
+                            <h2 className="text text_type_main-medium pb-6">
+                                {title}
+                            </h2> 
+                            <div className={ingredientsStyles.ingredients__list}>
+                            {
+                                props.data.map((ingredient, id) => (
+                                    <BurgerIngredient 
+                                        handleOpenModal={handleOpenModal}
+                                        setModalData={setModalData} 
+                                        ingredient={{...ingredient}} 
+                                        key={id}/>
+                                ))
+                            }
+                            </div>
+                        </div>
                     ))
-                }
-                </div>             
+                }        
             </div>
             { isVisible &&
               <IngredientDetails {...modalData} 
@@ -111,20 +108,7 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-       _id: PropTypes.string,
-       name: PropTypes.string,
-       type: PropTypes.string,
-       proteins: PropTypes.number,
-       fat: PropTypes.number,
-       carbohydrates: PropTypes.number,
-       calories: PropTypes.number,
-       price: PropTypes.number,
-       image: PropTypes.string,
-       image_mobile: PropTypes.string,
-       image_large: PropTypes.string,
-       __v: PropTypes.number
-    })).isRequired
+    data: PropTypes.arrayOf(PropTypes.shape({ ...ingredientPropTypes })).isRequired
 };
 
 export default BurgerIngredients;

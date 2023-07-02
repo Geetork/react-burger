@@ -2,25 +2,41 @@ import { useEffect, useState } from 'react';
 
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
+import { getIngredients } from '../../utils/api';
 
 import appStyles from './app.module.css';
 
 const App = () => {
-    const [data, setData] = useState([]);
-
-    const URL = 'https://norma.nomoreparties.space/api/ingredients';
+    const [state, setState] = useState({
+        hasError: false,
+        data: []
+      });
 
     useEffect(() => {
-        fetch(URL)
-        .then(res => (res.json()))
-        .then(data => setData(data.data))
-        .catch(err => { console.log(err) });
+        getIngredients()
+        .then(data => setState({
+            hasError: false,
+            data: data
+        }))
+        .catch((e) => setState({
+            ...state,
+            hasError: true,
+        }));
     }, []);
 
     return (
         <div className={appStyles.app}>
-            <AppHeader />
-            <Main data={data}/>
+            {state.hasError && 
+                <span className="text text_type_main-large">
+                    Произошла ошибка...
+                </span>
+            }
+            {!state.hasError && state.data.length &&
+                <>
+                    <AppHeader />
+                    <Main data={state.data}/>
+                </> 
+            }    
         </div>
     )
 }

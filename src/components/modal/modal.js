@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 const modalRoot = document.getElementById("modal");
 
@@ -55,19 +56,8 @@ const Modal = (props) => {
 }
 
 Modal.propTypes = {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-    setIsVisible: PropTypes.func
+    title: PropTypes.string,
+    setIsVisible: PropTypes.func.isRequired
 };
 
 export default Modal;

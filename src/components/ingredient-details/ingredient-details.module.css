@@ -5,6 +5,11 @@
     justify-content: space-between;
 }
 
+.img {
+    height: 240px;
+    width: 520px;
+}
+
 .specification__item {
     height: 56px;
     display: flex;
