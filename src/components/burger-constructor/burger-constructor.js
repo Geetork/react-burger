@@ -3,6 +3,8 @@ import { Button,
          ConstructorElement,
          CurrencyIcon,
          DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 import OrderDetails from '../order-details/order-details';
 
@@ -70,5 +72,9 @@ const BurgerConstructor = (props) => {
         </section>
     )
 }
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
+};
 
 export default BurgerConstructor;

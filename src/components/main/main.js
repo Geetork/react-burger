@@ -15,7 +15,7 @@ const Main = (props) => {
 }
 
 Main.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({ ...ingredientPropTypes })).isRequired
+    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
 };
 
 export default Main;
