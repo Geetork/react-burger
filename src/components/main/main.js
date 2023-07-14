@@ -1,21 +1,39 @@
-import PropTypes from 'prop-types';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch } from 'react-redux';
+
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { ADD_INGREDIENT, ADD_BUN } from '../../services/actions/burger-сonstructor';
+import { decreaseCounter, increaseCounter } from '../../services/actions/burger-ingredients';
 
 import mainStyles from './main.module.css';
 
-const Main = (props) => {
+const Main = () => {
+    const dispatch = useDispatch();
+
+    const onDropHandler = (bun, data, ingredient) => {
+        dispatch({
+            type: ingredient.type === 'bun' ? 
+                    ADD_BUN :
+                    ADD_INGREDIENT,
+            ingredient
+        });
+        ingredient.type === 'bun' &&
+            Object.keys(bun).length &&
+            dispatch(decreaseCounter(data, bun._id));
+
+        dispatch(increaseCounter(data, ingredient._id));
+    };
+
     return (
-        <main className={`${mainStyles.container}`}>
-            <BurgerIngredients data={props.data}/>
-            <BurgerConstructor data={props.data}/>
-        </main>
+        <DndProvider backend={HTML5Backend}>
+            <main className={`${mainStyles.container}`}>
+                <BurgerIngredients />
+                <BurgerConstructor onDropHandler={onDropHandler}/>
+            </main>
+        </DndProvider>
     )
 }
-
-Main.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
-};
 
 export default Main;

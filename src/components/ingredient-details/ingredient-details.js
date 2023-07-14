@@ -1,40 +1,42 @@
 import Modal from "../modal/modal";
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { ingredientPropTypes } from "../../utils/prop-types";
 
-const IngredientDetails = (props) => {
+const IngredientDetails = ({ setIsVisible }) => {
+    const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
+
     return (
         <Modal title='Детали ингредиента'
-               setIsVisible={props.setIsVisible}>
-            <img className={ingredientDetailsStyles.img} src={props.image_large} alt='oops...'/>
+               setIsVisible={setIsVisible}>
+            <img className={ingredientDetailsStyles.img} src={ingredient.image_large} alt='oops...'/>
             <span className="text text_type_main-medium mt-4 mb-8">
-                {props.name}
+                {ingredient.name}
             </span>
             <div className={`${ingredientDetailsStyles.specification}
                             text text_type_main-default mb-5`}>
                 <div className={ingredientDetailsStyles.specification__item}>
                     <span>Калории, ккал</span>
                     <span className="text text_type_digits-default">
-                        {props.calories}
+                        {ingredient.calories}
                     </span>
                 </div>
                 <div className={ingredientDetailsStyles.specification__item}>
                     <span>Жиры, г</span>
                     <span className="text text_type_digits-default">
-                        {props.fat}
+                        {ingredient.fat}
                     </span>
                 </div>
                 <div className={ingredientDetailsStyles.specification__item}>
                     <span>Белки, г</span>
                     <span className="text text_type_digits-default">
-                        {props.proteins}
+                        {ingredient.proteins}
                     </span>
                 </div>
                 <div className={ingredientDetailsStyles.specification__item}>
                     <span>Углеводы, г</span>
                     <span className="text text_type_digits-default">
-                        {props.carbohydrates}
+                        {ingredient.carbohydrates}
                     </span>
                 </div>
             </div>
@@ -43,8 +45,7 @@ const IngredientDetails = (props) => {
 }
 
 IngredientDetails.propTypes = { 
-    ...ingredientPropTypes,
-    setIsVisible: PropTypes.func.isRequired
+    setIsVisible: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;
