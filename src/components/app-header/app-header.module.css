@@ -35,3 +35,8 @@
 .menu__third_item {
     justify-content: flex-end;
 }
+
+.button {
+    text-decoration: none;
+    color: inherit;
+}

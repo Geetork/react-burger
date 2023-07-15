@@ -17,9 +17,6 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getIngredients());
-        dispatch({
-            type: GET_CONSTRUCTOR_INGREDIENTS
-        });
     }, []);
 
     return (

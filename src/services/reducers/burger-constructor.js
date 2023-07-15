@@ -31,8 +31,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         }
         case POST_ORDER_FAILED: {
             return {
-                ...state,
-                orderRequest: false,
+                ...initialState,
                 orderFailed: true
             }
         }

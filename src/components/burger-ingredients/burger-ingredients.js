@@ -62,16 +62,16 @@ BurgerIngredient.propTypes = {
     handleOpenModal: PropTypes.func.isRequired
 };
 
+const tabs = ['Булки', 'Соусы', 'Начинки'];
+const ingredientType = {
+    'Булки': 'bun',
+    'Соусы': 'sauce',
+    'Начинки': 'main'
+};
+
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('Булки');
     const [isVisible, setIsVisible] = useState(false);
-
-    const tabs = ['Булки', 'Соусы', 'Начинки'];
-    const ingredientType = {
-        'Булки': 'bun',
-        'Соусы': 'sauce',
-        'Начинки': 'main'
-    };
 
     const data = useSelector(store => store.ingredients.data);
 
@@ -87,7 +87,7 @@ const BurgerIngredients = () => {
             .getBoundingClientRect().y - ingredientsContainer));
 
         const minDist = Math.min(...dists);
-        setCurrent(tabs[dists.findIndex(el => el == minDist)]);
+        setCurrent(tabs[dists.findIndex(el => el === minDist)]);
     };
 
     return (

@@ -1,4 +1,5 @@
 import { getIngredients as getIngredientsAPI } from "../../utils/api";
+import { GET_CONSTRUCTOR_INGREDIENTS } from "./burger-сonstructor";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIETNS_SUCCESS';
@@ -7,9 +8,6 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const OPEN_INGREDIENT_MODAL = 'OPEN_INGREDIENT_MODAL';
 export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 
-export const INCREASE_COUNTER = 'INCREASE_COUNTER';
-export const DECREASE_COUNTER = 'DECREASE_COUNTER';
-
 export function getIngredients() {
     return function(dispatch) {
         dispatch({
@@ -17,10 +15,15 @@ export function getIngredients() {
         });
 
         getIngredientsAPI()
-        .then(res => dispatch({
-            type: GET_INGREDIENTS_SUCCESS,
-            data: res
-        }))
+        .then(res => {
+            dispatch({
+                type: GET_INGREDIENTS_SUCCESS,
+                data: res
+            });
+            dispatch({
+                type: GET_CONSTRUCTOR_INGREDIENTS
+            });
+        })
         .catch((e) => dispatch({
             type: GET_INGREDIENTS_FAILED
         }));
@@ -35,11 +38,9 @@ export function decreaseCounter(data, id) {
 
     ingredient['count'] -= num;
 
-    return function(dispatch) {
-        dispatch({
-            type: DECREASE_COUNTER          
-        })
-    }
+    return function(dispatch){
+        dispatch({ type: 'DEFAULT' });
+    };
 };
 
 export function increaseCounter(data, id) {
@@ -53,9 +54,7 @@ export function increaseCounter(data, id) {
         ingredient['count'] = num :
         ingredient['count'] += num;
 
-    return function(dispatch) {
-        dispatch({
-            type: INCREASE_COUNTER          
-        })
+    return function(dispatch){
+        dispatch({ type: 'DEFAULT' });
     }
 };
