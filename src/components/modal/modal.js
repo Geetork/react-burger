@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
+import { NavLink } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
@@ -17,12 +18,14 @@ const ModalOverlay = (props) => {
 const Modal = (props) => {
     const handleCloseModal = () => {
         props.setIsVisible(false);
+        window.history.replaceState(null, '', '/');
     };
 
     useEffect(() => {
         const handleKeyPress = (event) => {
             event.key === 'Escape' &&
             props.setIsVisible(false);
+            window.history.replaceState(null, '', '/');
         };
        
         document.addEventListener('keydown', handleKeyPress);
@@ -40,10 +43,12 @@ const Modal = (props) => {
                         <span className="text text_type_main-large">
                             {props.title}
                         </span>
-                        <CloseIcon
-                            onClick={handleCloseModal}
-                            className={modalStyles.close__button} 
-                            type="primary" />
+                        <NavLink to='/'>
+                            <CloseIcon
+                                onClick={handleCloseModal}
+                                className={modalStyles.close__button} 
+                                type="primary" />
+                        </NavLink>
                     </div>
 
                     <div className={modalStyles.modal__main}>

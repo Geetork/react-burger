@@ -14,6 +14,7 @@ import { makeOrder,
          REMOVE_INGREDIENT,
          ADD_BUN,
          ADD_INGREDIENT} from '../../services/actions/burger-сonstructor';
+import { useNavigate } from 'react-router-dom';
 
 const constructorIngredients = (bun, filling) => (
     Object.keys(bun).length === 0 ? 
@@ -23,6 +24,8 @@ const constructorIngredients = (bun, filling) => (
 
 const BurgerConstructor = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
+    const navigate = useNavigate();
 
     const { bun, filling } = useSelector(store => {
         const ingredients = store.constructorIngredients;
@@ -61,7 +64,13 @@ const BurgerConstructor = () => {
     const handleOpenModal = () => {
         const ingredients = [bun, ...filling, bun]
             .map(ingredient => ingredient._id);
-        dispatch(makeOrder(ingredients));
+        console.log(isAuthorized);
+
+        if (!isAuthorized) {
+            navigate('/login');
+        };
+
+        dispatch(makeOrder(ingredients))
         setIsVisible(true);
     };
 
@@ -116,9 +125,5 @@ const BurgerConstructor = () => {
         </section>
     )
 }
-
-// BurgerConstructor.propTypes = {
-//     onDropHandler: PropTypes.func.isRequired
-// };
 
 export default BurgerConstructor;

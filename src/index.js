@@ -1,10 +1,11 @@
 import ReactDOM from 'react-dom/client';
 import { compose, createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { rootReducer } from './services/reducers/index';
 
 import App from './components/app/app';
-import { rootReducer } from './services/reducers/index';
+import { Provider } from 'react-redux';
+
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -16,6 +17,6 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>
 );

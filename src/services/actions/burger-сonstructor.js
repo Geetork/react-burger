@@ -21,8 +21,10 @@ export function makeOrder(ingredients) {
             type: POST_ORDER_SUCCESS,
             order: res
         }))
-        .catch((e) => dispatch({
-            type: POST_ORDER_FAILED
-        }))
+        .catch((e) => {
+            dispatch({
+                type: POST_ORDER_FAILED
+            })
+        })
     }
 };

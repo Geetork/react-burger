@@ -1,14 +1,12 @@
 import Modal from "../modal/modal";
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { ingredientPropTypes } from "../../utils/prop-types";
 import ingredientDetailsStyles from './ingredient-details.module.css';
 
-const IngredientDetails = ({ setIsVisible }) => {
-    const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
-
+export const IngredientDetailsContent = ({ ingredient }) => {
     return (
-        <Modal title='Детали ингредиента'
-               setIsVisible={setIsVisible}>
+        <>
             <img className={ingredientDetailsStyles.img} src={ingredient.image_large} alt='oops...'/>
             <span className="text text_type_main-medium mt-4 mb-8">
                 {ingredient.name}
@@ -40,6 +38,21 @@ const IngredientDetails = ({ setIsVisible }) => {
                     </span>
                 </div>
             </div>
+        </>
+    )
+}
+
+IngredientDetailsContent.propTypes = {
+    ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
+}
+
+const IngredientDetails = ({ setIsVisible }) => {
+    const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
+
+    return (
+        <Modal title='Детали ингредиента'
+               setIsVisible={setIsVisible}>
+            <IngredientDetailsContent ingredient={ingredient}/>
         </Modal>
     )
 }

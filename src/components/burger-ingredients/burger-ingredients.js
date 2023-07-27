@@ -8,6 +8,7 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
+import { Link, NavLink } from 'react-router-dom';
 
 const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
     const counter = useSelector(store => 
@@ -32,8 +33,15 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
         handleOpenModal();
     };
 
+    const changePath = (e) => {
+        e.preventDefault();
+        window.history.replaceState(null, '', `/ingredients/${ingredient._id}`);
+    }
+
     return (
         !isDrag &&
+        <NavLink className={ingredientsStyles.link}
+            onClick={changePath}>
             <div className={`${ingredientsStyles.card} ml-3 mr-3`}
                 onClick={openModal}
                 ref={dragRef}>
@@ -53,7 +61,8 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
                     className="text text_type_main-default">
                     {ingredient.name}
                 </span>
-            </div>     
+            </div>  
+        </NavLink>   
     )
 }
 
@@ -122,10 +131,12 @@ const BurgerIngredients = () => {
                             {   
                                 data.map((ingredient, id) => {
                                     if (ingredient.type === ingredientType[title])
-                                        return <BurgerIngredient
-                                            handleOpenModal={handleOpenModal} 
-                                            ingredient={{...ingredient}} 
-                                            key={id}/>
+                                        return (
+                                                <BurgerIngredient
+                                                        handleOpenModal={handleOpenModal} 
+                                                        ingredient={{...ingredient}} 
+                                                        key={id}/>
+                                        )
                                 })
                             }
                             </div>

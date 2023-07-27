@@ -28,8 +28,6 @@ const ConstructorIngredient = ({
     const dragIndex = item.id;
     const hoverIndex = id;
 
-    console.log(dragIndex, hoverIndex);
-
     if (dragIndex === hoverIndex) {
         return;
     }
