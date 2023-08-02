@@ -8,6 +8,8 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const OPEN_INGREDIENT_MODAL = 'OPEN_INGREDIENT_MODAL';
 export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 
+export const CLEAR_COUNTERS = 'CLEAR_COUNTERS';
+
 export function getIngredients() {
     return function(dispatch) {
         dispatch({
@@ -18,7 +20,7 @@ export function getIngredients() {
         .then(res => {
             dispatch({
                 type: GET_INGREDIENTS_SUCCESS,
-                data: res
+                data: res.data
             });
             dispatch({
                 type: GET_CONSTRUCTOR_INGREDIENTS

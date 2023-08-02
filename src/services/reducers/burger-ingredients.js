@@ -2,7 +2,7 @@ import { GET_INGREDIENTS_REQUEST,
          GET_INGREDIENTS_SUCCESS,
          GET_INGREDIENTS_FAILED,
          OPEN_INGREDIENT_MODAL,
-         CLOSE_INGREDIENT_MODAL, 
+         CLOSE_INGREDIENT_MODAL,
          } from "../actions/burger-ingredients";
 
 const initialState = {

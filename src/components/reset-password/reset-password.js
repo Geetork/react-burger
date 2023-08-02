@@ -13,7 +13,7 @@ const ResetPassword = () => {
 
     const dispatch = useDispatch();
 
-    const onClick = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         dispatch(resetPassword(pass, code));
     }
@@ -28,34 +28,40 @@ const ResetPassword = () => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
+
                 <h1 className='text text_type_main-medium mb-6'>Восстановление пароля</h1>
-                <Input
-                    type={'text'}
-                    placeholder={'Введите новый пароль'}
-                    icon={'CurrencyIcon'}
-                    onChange={onChange}
-                    value={pass}
-                    name={'passwordReset'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="ml-1 mb-6"
-                    />
-                <Input
-                    type={'text'}
-                    placeholder={'Введите код из письма'}
-                    icon={'CurrencyIcon'}
-                    onChange={onChange}
-                    value={code}
-                    name={'emailCode'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="ml-1 mb-6"
-                    />
-                <Button onClick={onClick} htmlType="button" type="primary" size="medium">
-                    Сохранить
-                </Button>  
+                <form onSubmit={onSubmit}>
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите новый пароль'}
+                        icon={'CurrencyIcon'}
+                        onChange={onChange}
+                        value={pass}
+                        name={'passwordReset'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="ml-1 mb-6"
+                        />
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите код из письма'}
+                        icon={'CurrencyIcon'}
+                        onChange={onChange}
+                        value={code}
+                        name={'emailCode'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="ml-1 mb-6"
+                        />
+                    <div className={styles.buttons}>
+                        <Button htmlType="submit" type="primary" size="medium">
+                            Сохранить
+                        </Button> 
+                    </div>
+                </form>
+                 
                 <span className={`${styles.span} text text_type_main-default mt-20 mb-4`}>
                     Вспомнили пароль?
                     <Link to='/login' className={`${styles.link}

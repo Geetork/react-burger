@@ -20,16 +20,12 @@ const IngredientPage = () => {
     }, [])
 
     return (
-        <>
-            <AppHeader />
-            { 
-                ingredient ? 
-                    <main className={styles.ingredient__container}>
-                        <IngredientDetailsContent ingredient={ingredient} />
-                    </main> :
-                    <span>Ингредиент не найден</span>
-            }
-        </>
+        ingredient ? 
+            <main className={styles.ingredient__container}>
+                <IngredientDetailsContent ingredient={ingredient} />
+            </main> :
+            <span>Ингредиент не найден</span>
+
     )
 }
 

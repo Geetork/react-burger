@@ -16,12 +16,9 @@ const RegisterPage = () => {
 
     return (
         isAuthorized ? <Navigate to='/' replace/> :
-        <>
-            <AppHeader/>
             <main className={pageStyles.container}>
                 <Register/>
             </main>
-        </>
     )
 }
 

@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
-import { NavLink } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
@@ -17,14 +16,16 @@ const ModalOverlay = (props) => {
 
 const Modal = (props) => {
     const handleCloseModal = () => {
-        props.setIsVisible(false);
+        props.onClose();
+        // props.setIsVisible(false);
         window.history.replaceState(null, '', '/');
     };
 
     useEffect(() => {
         const handleKeyPress = (event) => {
             event.key === 'Escape' &&
-            props.setIsVisible(false);
+            props.onClose();
+            // props.setIsVisible(false);
             window.history.replaceState(null, '', '/');
         };
        
@@ -43,12 +44,10 @@ const Modal = (props) => {
                         <span className="text text_type_main-large">
                             {props.title}
                         </span>
-                        <NavLink to='/'>
-                            <CloseIcon
-                                onClick={handleCloseModal}
-                                className={modalStyles.close__button} 
-                                type="primary" />
-                        </NavLink>
+                        <CloseIcon
+                            onClick={handleCloseModal}
+                            className={modalStyles.close__button} 
+                            type="primary" />
                     </div>
 
                     <div className={modalStyles.modal__main}>
@@ -62,7 +61,8 @@ const Modal = (props) => {
 
 Modal.propTypes = {
     title: PropTypes.string,
-    setIsVisible: PropTypes.func.isRequired
+    // setIsVisible: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 };
 
 export default Modal;

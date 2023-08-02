@@ -1,19 +1,27 @@
-import AppHeader from "../components/app-header/app-header";
+import { useEffect } from 'react';
 import Profile from "../components/profile/profile";
 import ProfileNavigation from "../components/profile/profile-navigation";
 import pageStyles from './pages.module.css';
+import { useDispatch } from 'react-redux';
+import { SWITCH_HEADER_ITEM } from '../services/actions/navigation';
 
 const ProfilePage = () => {
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+        dispatch({
+            type: SWITCH_HEADER_ITEM,
+            current: 'profile'
+        });
+    });
+
     return (
-        <>
-            <AppHeader/>
-            <main className={pageStyles.profile__container}>
-                <div className={pageStyles.profile}>
-                    <ProfileNavigation/>
-                    <Profile/>
-                </div>
-            </main>
-        </>
+        <main className={pageStyles.profile__container}>
+            <div className={pageStyles.profile}>
+                <ProfileNavigation/>
+                <Profile/>
+            </div>
+        </main>
     )
 }
 

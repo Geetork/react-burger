@@ -1,16 +1,20 @@
 import { GET_RESET_PASSWORD_EMAIL_REQUEST,
          GET_RESET_PASSWORD_EMAIL_FAILED,
-         GET_RESET_PASSWORD_EMAIL_SUCCESSS, 
+         GET_RESET_PASSWORD_EMAIL_SUCCESS, 
          RESET_PASSWORD_EMAIL_REQUEST,
-         RESET_PASSWORD_EMAIL_SUCCESSS,
+         RESET_PASSWORD_EMAIL_SUCCESS,
          RESET_PASSWORD_EMAIL_FAILED,
-         SET_FORM_VALUE} from "../actions/reset-password"
+         SET_FORM_VALUE,
+         SET_INITIAL_STATE} from "../actions/reset-password"
 
 const initialState = {
-    request: true,
+    request: false,
     requestFailed: false,
 
     emailForgotPassword: '',
+    gotEmail: false,
+
+    isPasswordReset: false,
     passwordReset: '',
     emailCode: '',
 }
@@ -24,11 +28,18 @@ export const resetPasswordReducer = (state = initialState, action) => {
                 request: true
             })
         }
-        case GET_RESET_PASSWORD_EMAIL_SUCCESSS:
-        case RESET_PASSWORD_EMAIL_SUCCESSS: {
+        case GET_RESET_PASSWORD_EMAIL_SUCCESS: {
             return ({
                 ...state,
-                request: false
+                request: false,
+                gotEmail: true,
+            })
+        }
+        case RESET_PASSWORD_EMAIL_SUCCESS: {
+            return ({
+                ...state,
+                request: false,
+                isPasswordReset: true,
             })
         }
         case GET_RESET_PASSWORD_EMAIL_FAILED:
@@ -43,6 +54,9 @@ export const resetPasswordReducer = (state = initialState, action) => {
                 ...state,
                 [action.field]: action.value
             })
+        }
+        case SET_INITIAL_STATE: {
+            return initialState
         }
 
         default: {

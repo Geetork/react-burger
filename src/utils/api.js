@@ -2,173 +2,120 @@ import { getCookie } from "./cookie";
 
 const URL = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => res.ok ? res.json() : res.json()
-    .then((err) => Promise.reject(err));
+const checkResponse = (res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  };
+  
+const checkSuccess = (res) => {
+    if (res && res.success) {
+        return res;
+    }
 
-export function getIngredients() {
-    return fetch(`${URL}/ingredients`)
+    return Promise.reject(`Ответ не success: ${res}`);
+};
+  
+const request = (endpoint, options) => {
+    return fetch(`${URL}${endpoint}`, options)
         .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res.data;
-            return Promise.reject(res);    
-        });
-}
+        .then(checkSuccess);
+};
 
-export function makeOrder(data) {
-    return fetch(`${URL}/orders`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            ingredients: data,
-        }),
+export const getIngredients = () => request(`/ingredients`);
+
+export const makeOrder = (data) => request(`/orders`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        ingredients: data,
+    }),
+});
+
+export const getResetPasswordEmail = (email) => request(`/password-reset`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        email: email
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res.order.number;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function getResetPasswordEmail(email) {
-    return fetch(`${URL}/password-reset`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            email: email
-        })
+export const resetPassword = (pass, token) => request(`/password-reset/reset`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        password: pass,
+        token: token
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function resetPassword(pass, token) {
-    return fetch(`${URL}/password-reset/reset`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            password: pass,
-            token: token
-        })
+export const register = (name, email, pass) => request(`/auth/register`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        email: email,
+        password: pass,
+        name: name
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function register(name, email, pass) {
-    return fetch(`${URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            email: email,
-            password: pass,
-            name: name
-        })
+export const login = (email, pass) => request(`/auth/login`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        email: email,
+        password: pass
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function login(email, pass) {
-    return fetch(`${URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            email: email,
-            password: pass
-        })
+export const logout = () => request(`/auth/logout`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+        token: localStorage.getItem('refreshToken')
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function logout() {
-    return fetch(`${URL}/auth/logout`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
-        })
-    })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+export const getUserInfo = () => request(`/auth/user`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: getCookie('token')
+    }
+})
 
-export function getUserInfo() {
-    return fetch(`${URL}/auth/user`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-            authorization: getCookie('token')
-        }
+export const changeUserInfo = (name, email, pass) => request(`/auth/user`, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: getCookie('token')
+    },
+    body: JSON.stringify({
+        name: name,
+        email: email,
+        password: pass
     })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+})
 
-export function changeUserInfo(name, email, pass) {
-    return fetch(`${URL}/auth/user`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            authorization: getCookie('token')
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email,
-            password: pass
-        })
-    })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
-
-export function refreshToken() {
-    return fetch(`${URL}/auth/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')})
-    })
-        .then(checkResponse)
-        .then((res) => {
-            if (res?.success) return res;
-            return Promise.reject(res);    
-        });
-}
+export const refreshToken = () => request(`/auth/token`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+    },
+    body: JSON.stringify({
+        token: localStorage.getItem('refreshToken')})
+})

@@ -46,19 +46,19 @@ IngredientDetailsContent.propTypes = {
     ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
 }
 
-const IngredientDetails = ({ setIsVisible }) => {
+const IngredientDetails = ({ onClose }) => {
     const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
 
     return (
         <Modal title='Детали ингредиента'
-               setIsVisible={setIsVisible}>
+            onClose={onClose}>
             <IngredientDetailsContent ingredient={ingredient}/>
         </Modal>
     )
 }
 
 IngredientDetails.propTypes = { 
-    setIsVisible: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;

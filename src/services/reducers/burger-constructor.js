@@ -6,7 +6,8 @@ import {
         ADD_INGREDIENT,
         ADD_BUN,
         REMOVE_INGREDIENT,
-        MOVE_INGREDIENT
+        MOVE_INGREDIENT,
+        CLEAR_CONSTRUCTOR
        } from '../actions/burger-сonstructor';
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
     orderRequest: false,
     orderFailed: false,
     order: '',
+
+    isLoading: false,
 }
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -26,20 +29,23 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case POST_ORDER_REQUEST: {
             return {
                 ...state,
-                orderRequest: true
+                orderRequest: true,
+                isLoading: true,
             };
         }
         case POST_ORDER_FAILED: {
             return {
                 ...initialState,
-                orderFailed: true
+                orderFailed: true,
+                isLoading: false,
             }
         }
         case POST_ORDER_SUCCESS: {
             return {
                 ...state,
                 orderRequest: false,
-                order: action.order
+                order: action.order,
+                isLoading: false,
             }
         }
         case ADD_INGREDIENT: {
@@ -47,14 +53,21 @@ export const burgerConstructorReducer = (state = initialState, action) => {
                 ...state,
                 constructorIngredients: [
                     ...state.constructorIngredients,
-                    action.ingredient
+                    {
+                        id: action.id,
+                        ...action.ingredient
+                    }
                 ]
             }
         }
         case ADD_BUN: {
             return {
                 ...state,
-                bun: action.ingredient
+                bun: {
+                    idTop: action.idTop,
+                    idBottom: action.idBottom,
+                    ...action.ingredient
+                }
             }
         }
         case REMOVE_INGREDIENT: {
@@ -76,6 +89,13 @@ export const burgerConstructorReducer = (state = initialState, action) => {
                 ...state,
                 constructorIngredients: ingredients
             }
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                bun: {},
+                constructorIngredients: []
+            };
         }
         default: {
             return state;

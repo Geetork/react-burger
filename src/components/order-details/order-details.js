@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import Loader from '../loader/loader';
 import Modal from '../modal/modal';
 import checkMark from './graphics.svg';
 
-const OrderDetails = (props) => {
-    const order = useSelector(store => store.constructorIngredients.order);
+const OrderDetails = ({ onClose }) => {
+    const { order, isLoading } = useSelector(store => ({
+        order: store.constructorIngredients.order,
+        isLoading: store.constructorIngredients.isLoading
+    }));
 
     return (
-        <Modal setIsVisible={props.setIsVisible}>
+        !isLoading ? <Modal onClose={onClose}>
             <span className="text text_type_digits-large mt-10 mb-8">{order}</span>
             <span className="text text_type_main-medium mb-15">идентификатор заказа</span>
             <img src={checkMark} alt='oops..' style={{ height: 120 }}/>
@@ -16,12 +20,12 @@ const OrderDetails = (props) => {
             <span className="text text_type_main-small mb-20">
                 Дождитесь готовности на орбитальной станции
             </span>
-        </Modal>
+        </Modal> : <Loader/>
     )
 }
 
 OrderDetails.propTypes = {
-    setIsVisible: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
 };
 
 export default OrderDetails;

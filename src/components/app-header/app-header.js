@@ -37,7 +37,7 @@ const AppHeader = () => {
                 </div>
                 <div className={`${appHeaderStyles.menu__item}
                                  ${appHeaderStyles.menu__second_item}`}>
-                    <a href='/'><Logo /></a>
+                    <Link to='/' onClick={() => switchTab('constructor')}><Logo /></Link>
                 </div>               
                 <div className={`${appHeaderStyles.menu__item}
                                  ${appHeaderStyles.menu__third_item}`}>

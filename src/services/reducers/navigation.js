@@ -1,5 +1,6 @@
 import { SWITCH_PROFILE_NAVIGATION_ITEM,
-         SWITCH_HEADER_ITEM } from "../actions/navigation";
+         SWITCH_HEADER_ITEM,
+         SET_NAVIGATION_INITIAL_STATE } from "../actions/navigation";
 
 
 const initialState = {
@@ -20,6 +21,9 @@ export const profileNavigationReducer = (state = initialState, action) => {
                 ...state,
                 header: action.current
             }
+        }
+        case SET_NAVIGATION_INITIAL_STATE: {
+            return initialState;
         }
         default: {
             return state;

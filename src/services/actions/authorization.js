@@ -6,6 +6,7 @@ import { register as registerAPI,
          logout as logoutAPI,
         } from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
+import { SET_NAVIGATION_INITIAL_STATE, SWITCH_HEADER_ITEM, SWITCH_PROFILE_NAVIGATION_ITEM } from './navigation';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_FAILED = 'REGISTER_FAILED';
@@ -82,6 +83,10 @@ export function logout() {
             deleteCookie('token');
 
             dispatch({ type: LOGOUT_SUCCESS });
+            dispatch({ 
+                type: SWITCH_HEADER_ITEM,
+                current: 'constructor'
+            });
         })
         .catch(res => {
             console.log(res);
@@ -126,6 +131,7 @@ export function changeUserInfo(name, email, password) {
             dispatch({
                 type: CHANGE_USER_INFO_SUCCESS,
             });
+            
         })
         .catch((res) => {
             if (res.message === 'jwt expired') {

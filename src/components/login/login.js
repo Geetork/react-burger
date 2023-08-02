@@ -12,7 +12,7 @@ const Login = () => {
     }));
     const dispatch = useDispatch();
 
-    const onClick = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         dispatch(login(email, pass));
     };
@@ -28,34 +28,40 @@ const Login = () => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
+
                 <h1 className='text text_type_main-medium mb-6'>Вход</h1>
-                <Input
-                    type={'text'}
-                    placeholder={'E-mail'}
-                    icon={'CurrencyIcon'}
-                    onChange={onChange}
-                    value={email}
-                    name={'email'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="ml-1 mb-6"
-                    />
-                <Input
-                    type={'text'}
-                    placeholder={'Пароль'}
-                    icon={'CurrencyIcon'}
-                    onChange={onChange}
-                    value={pass}
-                    name={'password'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="ml-1 mb-6"
-                    />
-                <Button onClick={onClick} htmlType="button" type="primary" size="medium">
-                    Войти
-                </Button>  
+                <form onSubmit={onSubmit}>
+                    <Input
+                        type={'text'}
+                        placeholder={'E-mail'}
+                        icon={'CurrencyIcon'}
+                        onChange={onChange}
+                        value={email}
+                        name={'email'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="ml-1 mb-6"
+                        />
+                    <Input
+                        type={'text'}
+                        placeholder={'Пароль'}
+                        icon={'CurrencyIcon'}
+                        onChange={onChange}
+                        value={pass}
+                        name={'password'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="ml-1 mb-6"
+                        />
+                    <div className={styles.buttons}>
+                        <Button htmlType="submit" type="primary" size="medium">
+                            Войти
+                        </Button>
+                    </div>
+                </form>
+                  
                 <span className={`${styles.span} text text_type_main-default mt-20 mb-4`}>
                     Вы - новый пользователь?
                     <Link to='/register' className={`${styles.link}

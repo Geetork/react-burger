@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop } from 'react-dnd';
+import { v4 } from 'uuid';
 
+import Loader from '../loader/loader';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from './total-price';
 import ConstructorIngredient from './constructor-ingredient';
@@ -19,7 +21,9 @@ import { useNavigate } from 'react-router-dom';
 const constructorIngredients = (bun, filling) => (
     Object.keys(bun).length === 0 ? 
         [...filling] :
-        [bun, ...filling, bun]
+        [{...bun, id: bun.idTop},
+         ...filling,
+         {...bun, id: bun.idBottom}]
 )
 
 const BurgerConstructor = () => {
@@ -48,12 +52,18 @@ const BurgerConstructor = () => {
     });
 
     const onDropHandler = (bun, data, ingredient) => {
-        dispatch({
-            type: ingredient.type === 'bun' ? 
-                    ADD_BUN :
-                    ADD_INGREDIENT,
-            ingredient
-        });
+        ingredient.type === 'bun' ?
+            dispatch({
+                type: ADD_BUN,
+                idTop: v4(),
+                idBottom: v4(),
+                ingredient
+            }) :
+            dispatch({
+                type: ADD_INGREDIENT,
+                id: v4(),
+                ingredient
+            });
         ingredient.type === 'bun' &&
             Object.keys(bun).length &&
             dispatch(decreaseCounter(data, bun._id));
@@ -64,7 +74,6 @@ const BurgerConstructor = () => {
     const handleOpenModal = () => {
         const ingredients = [bun, ...filling, bun]
             .map(ingredient => ingredient._id);
-        console.log(isAuthorized);
 
         if (!isAuthorized) {
             navigate('/login');
@@ -72,6 +81,10 @@ const BurgerConstructor = () => {
 
         dispatch(makeOrder(ingredients))
         setIsVisible(true);
+    };
+
+    const onClose = () => {
+        setIsVisible(false);
     };
 
     const deleteIngredient = (e, id, _id, type) => {
@@ -101,7 +114,7 @@ const BurgerConstructor = () => {
                     {
                         constructorIngredients(bun, filling).map((el, id) => (
                             <ConstructorIngredient
-                                key={id}
+                                key={el.id}
                                 id={id}
                                 ingredient={el}
                                 moveIngredient={moveIngredient}
@@ -116,12 +129,12 @@ const BurgerConstructor = () => {
                     htmlType="button"
                     type="primary"
                     size="large"
-                    onClick={handleOpenModal}>
+                    onClick={handleOpenModal}
+                    disabled={Object.keys(bun).length === 0 ? true : false}>
                     Оформить заказ
                 </Button>
             </div>
-
-            { isVisible && <OrderDetails setIsVisible={setIsVisible}/> }
+            { isVisible && <OrderDetails onClose={onClose}/> }
         </section>
     )
 }

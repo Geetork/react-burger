@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getUserInfo } from '../../services/actions/authorization';
 import { PropTypes } from 'prop-types';
 
 export const ProtectedRouterElement = ({ element }) => {
+    const location = useLocation();
     const isAuthorized = useSelector(store => store.authorization.isAuthorized);
     const dispatch = useDispatch();
 
@@ -12,7 +13,10 @@ export const ProtectedRouterElement = ({ element }) => {
         dispatch(getUserInfo());
     }, []);
 
-    return (isAuthorized ? element : <Navigate to='/login' replace/>)
+    return (isAuthorized ? element : <Navigate
+        to='/login' 
+        state={{ from: location }}
+        replace/>)
 }
 
 ProtectedRouterElement.propTypes = {

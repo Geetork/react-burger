@@ -8,7 +8,7 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
     const counter = useSelector(store => 
@@ -16,6 +16,7 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
             item._id === ingredient._id)?.count);
 
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [{ isDrag }, dragRef] = useDrag({
         type: 'burgerIngredient',
@@ -33,15 +34,11 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
         handleOpenModal();
     };
 
-    const changePath = (e) => {
-        e.preventDefault();
-        window.history.replaceState(null, '', `/ingredients/${ingredient._id}`);
-    }
-
     return (
         !isDrag &&
-        <NavLink className={ingredientsStyles.link}
-            onClick={changePath}>
+        <Link className={ingredientsStyles.link}
+            to={`/ingredients/${ingredient._id}`}
+            state={{ background: location }}>
             <div className={`${ingredientsStyles.card} ml-3 mr-3`}
                 onClick={openModal}
                 ref={dragRef}>
@@ -62,7 +59,7 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
                     {ingredient.name}
                 </span>
             </div>  
-        </NavLink>   
+        </Link>   
     )
 }
 
@@ -81,6 +78,7 @@ const ingredientType = {
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('Булки');
     const [isVisible, setIsVisible] = useState(false);
+    const navigate = useNavigate();
 
     const data = useSelector(store => store.ingredients.data);
 
@@ -97,6 +95,11 @@ const BurgerIngredients = () => {
 
         const minDist = Math.min(...dists);
         setCurrent(tabs[dists.findIndex(el => el === minDist)]);
+    };
+
+    const onClose = () => {
+        setIsVisible(false);
+        navigate(-1);
     };
 
     return (
@@ -145,7 +148,7 @@ const BurgerIngredients = () => {
                 }        
             </div>
             { isVisible &&
-              <IngredientDetails setIsVisible={setIsVisible}/>}
+              <IngredientDetails onClose={onClose}/>}
         </section>
     )
 }

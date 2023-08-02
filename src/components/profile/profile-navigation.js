@@ -36,7 +36,7 @@ const ProfileNavigation = () => {
                             to='/profile'>История заказов</Link>
                     </span>
                     <span className={currentTab === 'signout' ? `` : `text_color_inactive`}
-                        onClick={() => switchTab('profile')}>
+                        onClick={() => {switchTab('profile')}}>
                         <Link className={styles.span}
                             onClick={signout}
                             to='/'>Выход</Link>        
