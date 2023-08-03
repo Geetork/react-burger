@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { ingredientPropTypes } from "../../utils/prop-types";
 import ingredientDetailsStyles from './ingredient-details.module.css';
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const IngredientDetailsContent = ({ ingredient }) => {
     return (
@@ -48,7 +49,7 @@ IngredientDetailsContent.propTypes = {
 
 const IngredientDetails = ({ onClose }) => {
     const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
-
+    
     return (
         <Modal title='Детали ингредиента'
             onClose={onClose}>

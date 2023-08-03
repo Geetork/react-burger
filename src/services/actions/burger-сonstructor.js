@@ -1,5 +1,5 @@
 import { makeOrder as makeOrderAPI } from "../../utils/api";
-import { getIngredients } from "./burger-ingredients";
+import { RESET_INGREDIENTS_COUNTERS } from "./burger-ingredients";
 
 export const GET_CONSTRUCTOR_INGREDIENTS = 'GET_CONSTRUCTOR_INGREDIENTS';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
@@ -25,8 +25,8 @@ export function makeOrder(ingredients) {
                 type: POST_ORDER_SUCCESS,
                 order: res.order.number
             });
-            dispatch({ type: CLEAR_CONSTRUCTOR })
-            dispatch(getIngredients())
+            dispatch({ type: CLEAR_CONSTRUCTOR });
+            dispatch({ type: RESET_INGREDIENTS_COUNTERS });
         })
         .catch((e) => {
             dispatch({

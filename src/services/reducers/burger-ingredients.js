@@ -3,6 +3,7 @@ import { GET_INGREDIENTS_REQUEST,
          GET_INGREDIENTS_FAILED,
          OPEN_INGREDIENT_MODAL,
          CLOSE_INGREDIENT_MODAL,
+         RESET_INGREDIENTS_COUNTERS,
          } from "../actions/burger-ingredients";
 
 const initialState = {
@@ -44,6 +45,16 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentModalIngredient: {}
+            }
+        }
+        case RESET_INGREDIENTS_COUNTERS: {
+            const ingredients = state.data.map(ingredient => ({
+                ...ingredient,
+                count: 0
+            }));
+            return {
+                ...state,
+                data: ingredients
             }
         }
         default: {

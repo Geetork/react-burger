@@ -8,7 +8,7 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
-import { Link, NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
     const counter = useSelector(store => 
@@ -82,7 +82,9 @@ const BurgerIngredients = () => {
 
     const data = useSelector(store => store.ingredients.data);
 
-    const handleOpenModal = () => setIsVisible(true);
+    const handleOpenModal = () => {
+        setIsVisible(true);
+    };
 
     const onScroll = () => {       
         const ingredientsContainer = 

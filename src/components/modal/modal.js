@@ -17,16 +17,12 @@ const ModalOverlay = (props) => {
 const Modal = (props) => {
     const handleCloseModal = () => {
         props.onClose();
-        // props.setIsVisible(false);
-        window.history.replaceState(null, '', '/');
     };
 
     useEffect(() => {
         const handleKeyPress = (event) => {
             event.key === 'Escape' &&
             props.onClose();
-            // props.setIsVisible(false);
-            window.history.replaceState(null, '', '/');
         };
        
         document.addEventListener('keydown', handleKeyPress);
@@ -61,7 +57,6 @@ const Modal = (props) => {
 
 Modal.propTypes = {
     title: PropTypes.string,
-    // setIsVisible: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired
 };
 

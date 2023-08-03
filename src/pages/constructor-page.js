@@ -1,21 +1,22 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Main from '../components/main/main';
-import { getIngredients } from '../services/actions/burger-ingredients';
 
 import appStyles from './pages.module.css';
-import Loader from '../components/loader/loader';
+import { useNavigate } from 'react-router-dom';
 
 const ConstructorPage = () => {
+    const path = window.location.pathname;
+    const navigate = useNavigate();
+
     const { data, ingredientsFailed } = useSelector(store => ({
         data: store.ingredients.data,
         ingredientsFailed: store.ingredients.ingredientsFailed,
     }));
-    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getIngredients());
+        navigate(path);
     }, []);
 
     return (

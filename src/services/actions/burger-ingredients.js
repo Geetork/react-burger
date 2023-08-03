@@ -8,7 +8,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const OPEN_INGREDIENT_MODAL = 'OPEN_INGREDIENT_MODAL';
 export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 
-export const CLEAR_COUNTERS = 'CLEAR_COUNTERS';
+export const RESET_INGREDIENTS_COUNTERS = 'RESET_INGREDIENTS_COUNTERS';
 
 export function getIngredients() {
     return function(dispatch) {
