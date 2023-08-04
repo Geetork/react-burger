@@ -7,11 +7,6 @@ import { PropTypes } from 'prop-types';
 export const ProtectedRouterElement = ({ element }) => {
     const location = useLocation();
     const isAuthorized = useSelector(store => store.authorization.isAuthorized);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getUserInfo());
-    }, []);
 
     return (isAuthorized ? element : <Navigate
         to='/login' 

@@ -77,10 +77,10 @@ const BurgerConstructor = () => {
 
         if (!isAuthorized) {
             navigate('/login');
+        } else {
+            dispatch(makeOrder(ingredients))
+            setIsVisible(true);
         };
-
-        dispatch(makeOrder(ingredients))
-        setIsVisible(true);
     };
 
     const onClose = () => {
