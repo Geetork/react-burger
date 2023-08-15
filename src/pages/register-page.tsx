@@ -7,10 +7,11 @@ import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
 
 const RegisterPage = () => {
-    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
+    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

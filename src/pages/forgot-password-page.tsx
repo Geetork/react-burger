@@ -6,12 +6,13 @@ import ForgotPassword from "../components/forgot-password/forgot-password";
 import pageStyles from './pages.module.css';
 
 const ForgotPasswordPage = () => {
-    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
-    const emailRequest = useSelector(store => store.resetPassword.gotEmail);
+    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
+    const emailRequest = useSelector((store: any) => store.resetPassword.gotEmail);
     const location = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

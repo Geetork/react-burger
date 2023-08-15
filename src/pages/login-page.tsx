@@ -6,13 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 
 const LoginPage = () => {
-    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
+    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const location = useLocation();
     const dispatch = useDispatch();
 
     const fromPage = location.state?.from?.pathname || '/';
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

@@ -6,16 +6,16 @@ import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
 
 const ResetPasswordPage = () => {
-    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
-    const isPasswordReset = useSelector(store => store.resetPassword.isPasswordReset);
+    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
+    const isPasswordReset = useSelector((store: any) => store.resetPassword.isPasswordReset);
     const location = useLocation();
     const dispatch = useDispatch();
 
     const fromPage = location.state?.from?.pathname || '/';
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUserInfo());
-        isAuthorized && dispatch();
     }, []);
 
     return (

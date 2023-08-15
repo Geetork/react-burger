@@ -10,7 +10,7 @@ const ConstructorPage = () => {
     const path = window.location.pathname;
     const navigate = useNavigate();
 
-    const { data, ingredientsFailed } = useSelector(store => ({
+    const { data, ingredientsFailed } = useSelector((store: any) => ({
         data: store.ingredients.data,
         ingredientsFailed: store.ingredients.ingredientsFailed,
     }));
