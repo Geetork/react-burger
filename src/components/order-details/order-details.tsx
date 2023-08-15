@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
+import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import Loader from '../loader/loader';
 import Modal from '../modal/modal';
 import checkMark from './graphics.svg';
 
-const OrderDetails = ({ onClose }) => {
-    const { order, isLoading } = useSelector(store => ({
+const OrderDetails: FunctionComponent<{onClose: () => void}> = ({ onClose }) => {
+    const { order, isLoading } = useSelector((store: any) => ({
         order: store.constructorIngredients.order,
         isLoading: store.constructorIngredients.isLoading
     }));
@@ -23,9 +23,5 @@ const OrderDetails = ({ onClose }) => {
         </Modal> : <Loader/>
     )
 }
-
-OrderDetails.propTypes = {
-    onClose: PropTypes.func.isRequired
-};
 
 export default OrderDetails;

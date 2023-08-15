@@ -1,27 +1,31 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, FunctionComponent, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
 
-const modalRoot = document.getElementById("modal");
+const modalRoot = document.getElementById("modal") as Element;
 
-const ModalOverlay = (props) => {
+const ModalOverlay: FunctionComponent<{ handleCloseModal: () => void }> = ({
+    handleCloseModal }) => {
     return (
-        <div onClick={props.handleCloseModal} 
+        <div onClick={handleCloseModal} 
              className={modalStyles.overlay}/>
     )
 }
 
-const Modal = (props) => {
+type TModal = {
+    title?:string;
+    onClose: () => void;
+};
+
+const Modal: FunctionComponent<PropsWithChildren<TModal>> = (props) => {
     const handleCloseModal = () => {
         props.onClose();
     };
 
     useEffect(() => {
-        const handleKeyPress = (event) => {
-            event.key === 'Escape' &&
+        const handleKeyPress = (e: KeyboardEvent) => {
+            e.key === 'Escape' &&
             props.onClose();
         };
        
@@ -42,7 +46,6 @@ const Modal = (props) => {
                         </span>
                         <CloseIcon
                             onClick={handleCloseModal}
-                            className={modalStyles.close__button} 
                             type="primary" />
                     </div>
 
@@ -54,10 +57,5 @@ const Modal = (props) => {
         </div>        
     ), modalRoot)
 }
-
-Modal.propTypes = {
-    title: PropTypes.string,
-    onClose: PropTypes.func.isRequired
-};
 
 export default Modal;

@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
@@ -7,14 +8,17 @@ import { SET_FORM_VALUE } from "../../services/actions/reset-password";
 import styles from './forgot-password.module.css';
 
 const ForgotPassword = () => {
-    const value = useSelector(store => store.resetPassword.emailForgotPassword);
+    const value = useSelector((store: any) => store.resetPassword.emailForgotPassword);
     const dispatch = useDispatch();
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(getResetPasswordEmail(value));
+        dispatch(
+            // @ts-ignore
+            getResetPasswordEmail(value)
+        );
     }
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
             type: SET_FORM_VALUE,
             field: e.target.name,

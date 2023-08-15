@@ -1,19 +1,25 @@
-import PropTypes from 'prop-types';
-import { useDrag, useDrop } from 'react-dnd';
-import { useRef } from 'react';
+import { XYCoord, useDrag, useDrop } from 'react-dnd';
+import { FunctionComponent, useRef } from 'react';
 
 import { DragIcon,
          ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './burger-constructor.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { IIngredient } from '../../utils/types';
 
-const ConstructorIngredient = ({ 
+interface IConstructorIngredient {
+    id: number;
+    ingredient: IIngredient;
+    deleteIngredient: (e: React.MouseEvent<HTMLElement>, id: number, _id: string, type: string) => void;
+    moveIngredient: (dragIndex: number, hoverIndex: number) => void;
+}
+
+const ConstructorIngredient: FunctionComponent<IConstructorIngredient> = ({ 
     id,
     ingredient,
     deleteIngredient,
     moveIngredient
     }) => {                               
-    const ref = useRef(null)
+    const ref = useRef<HTMLInputElement>(null)
     const [{ handlerId }, drop] = useDrop({
         accept: 'filling',
         collect(monitor) {
@@ -25,21 +31,21 @@ const ConstructorIngredient = ({
         if (!ref.current) {
         return;
     }
-    const dragIndex = item.id;
+    const dragIndex = (item as IConstructorIngredient).id;
     const hoverIndex = id;
 
     if (dragIndex === hoverIndex) {
         return;
     }
 
-    const hoverBoundingRect = ref.current?.getBoundingClientRect()
+    const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
     const hoverMiddleY =
-    (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+    (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
-    const clientOffset = monitor.getClientOffset()
+    const clientOffset = monitor.getClientOffset();
 
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top
+    const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
@@ -49,7 +55,7 @@ const ConstructorIngredient = ({
     }
 
         moveIngredient(dragIndex, hoverIndex);
-        item.id = hoverIndex;
+        (item as IConstructorIngredient).id = hoverIndex;
     },
     })
 
@@ -86,13 +92,6 @@ const ConstructorIngredient = ({
             />
         </div>
     )
-};
-
-ConstructorIngredient.propTypes = {
-    id: PropTypes.number.isRequired,
-    ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
-    moveIngredient: PropTypes.func.isRequired,
-    deleteIngredient: PropTypes.func.isRequired,
 };
 
 export default ConstructorIngredient;

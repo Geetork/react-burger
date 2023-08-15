@@ -1,18 +1,22 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState, FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IIngredient } from '../../utils/types';
 
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
 import { Link, NavLink, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
-    const counter = useSelector(store => 
-        store.ingredients.data.find(item => 
+interface IBurgerIngredient {
+    ingredient: IIngredient;
+    handleOpenModal: () => void;
+}
+
+const BurgerIngredient: FunctionComponent<IBurgerIngredient> = ({ ingredient, handleOpenModal }) => {
+    const counter = useSelector((store: any) => 
+        store.ingredients.data.find((item: IIngredient) => 
             item._id === ingredient._id)?.count);
 
     const dispatch = useDispatch();
@@ -35,7 +39,7 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
     };
 
     return (
-        !isDrag &&
+        !isDrag ?
         <Link className={ingredientsStyles.link}
             to={`/ingredients/${ingredient._id}`}
             state={{ background: location }}>
@@ -59,17 +63,14 @@ const BurgerIngredient = ({ ingredient, handleOpenModal }) => {
                     {ingredient.name}
                 </span>
             </div>  
-        </Link>   
+        </Link> : <></>
     )
 }
 
-BurgerIngredient.propTypes = { 
-    ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
-    handleOpenModal: PropTypes.func.isRequired
-};
-
 const tabs = ['Булки', 'Соусы', 'Начинки'];
-const ingredientType = {
+
+
+const ingredientType: {[name: string]: string} = {
     'Булки': 'bun',
     'Соусы': 'sauce',
     'Начинки': 'main'
@@ -80,7 +81,7 @@ const BurgerIngredients = () => {
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
 
-    const data = useSelector(store => store.ingredients.data);
+    const data = useSelector((store: any) => store.ingredients.data);
 
     const handleOpenModal = () => {
         setIsVisible(true);
@@ -88,11 +89,11 @@ const BurgerIngredients = () => {
 
     const onScroll = () => {       
         const ingredientsContainer = 
-            document.getElementById('ingredients__container')
+            (document.getElementById('ingredients__container') as HTMLDivElement)
             .getBoundingClientRect().y;
 
         const dists = tabs.map((title) => 
-            Math.abs(document.getElementById(title)
+            Math.abs((document.getElementById(title) as HTMLDivElement)
             .getBoundingClientRect().y - ingredientsContainer));
 
         const minDist = Math.min(...dists);
@@ -134,7 +135,7 @@ const BurgerIngredients = () => {
                             </h2> 
                             <div className={ingredientsStyles.ingredients__list}>
                             {   
-                                data.map((ingredient, id) => {
+                                data.map((ingredient: IIngredient, id: string) => {
                                     if (ingredient.type === ingredientType[title])
                                         return (
                                                 <BurgerIngredient

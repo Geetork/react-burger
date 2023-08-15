@@ -1,31 +1,38 @@
 import { getCookie } from "./cookie";
+import { TRefreshResponse,
+         TAuth,
+         TLogout,
+         TResetPassword,
+         TOrderResponse,
+         TUserInfo,         
+} from './types';
 
 const URL = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
-  };
+};
   
-const checkSuccess = (res) => {
-    if (res && res.success) {
+const checkSuccess = <T>(res: any) => {
+    if (res?.success) {
         return res;
     }
 
     return Promise.reject(`Ответ не success: ${res}`);
 };
   
-const request = (endpoint, options) => {
+const request = <T>(endpoint: RequestInfo, options?: RequestInit) => {
     return fetch(`${URL}${endpoint}`, options)
-        .then(checkResponse)
-        .then(checkSuccess);
+        .then(res => checkResponse<T>(res))
+        .then(res => checkSuccess<T>(res));
 };
 
 export const getIngredients = () => request(`/ingredients`);
 
-export const makeOrder = (data) => request(`/orders`, {
+export const makeOrder = (data: string[]) => request<TOrderResponse>(`/orders`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -35,7 +42,7 @@ export const makeOrder = (data) => request(`/orders`, {
     }),
 });
 
-export const getResetPasswordEmail = (email) => request(`/password-reset`, {
+export const getResetPasswordEmail = (email: string) => request<TResetPassword>(`/password-reset`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -45,7 +52,7 @@ export const getResetPasswordEmail = (email) => request(`/password-reset`, {
     })
 })
 
-export const resetPassword = (pass, token) => request(`/password-reset/reset`, {
+export const resetPassword = (pass: string, token: string) => request<TResetPassword>(`/password-reset/reset`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -56,7 +63,7 @@ export const resetPassword = (pass, token) => request(`/password-reset/reset`, {
     })
 })
 
-export const register = (name, email, pass) => request(`/auth/register`, {
+export const register = (name: string, email: string, pass: string) => request<TAuth>(`/auth/register`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -68,7 +75,7 @@ export const register = (name, email, pass) => request(`/auth/register`, {
     })
 })
 
-export const login = (email, pass) => request(`/auth/login`, {
+export const login = (email: string, pass: string) => request<TAuth>(`/auth/login`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -79,7 +86,7 @@ export const login = (email, pass) => request(`/auth/login`, {
     })
 })
 
-export const logout = () => request(`/auth/logout`, {
+export const logout = () => request<TLogout>(`/auth/logout`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -89,20 +96,20 @@ export const logout = () => request(`/auth/logout`, {
     })
 })
 
-export const getUserInfo = () => request(`/auth/user`, {
+export const getUserInfo = () => request<TUserInfo>(`/auth/user`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
         authorization: getCookie('token')
-    }
+    } as HeadersInit
 })
 
-export const changeUserInfo = (name, email, pass) => request(`/auth/user`, {
+export const changeUserInfo = (name: string, email: string, pass: string) => request<TUserInfo>(`/auth/user`, {
     method: 'PATCH',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
         authorization: getCookie('token')
-    },
+    } as HeadersInit,
     body: JSON.stringify({
         name: name,
         email: email,
@@ -110,7 +117,7 @@ export const changeUserInfo = (name, email, pass) => request(`/auth/user`, {
     })
 })
 
-export const refreshToken = () => request(`/auth/token`, {
+export const refreshToken = () => request<TRefreshResponse>(`/auth/token`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',

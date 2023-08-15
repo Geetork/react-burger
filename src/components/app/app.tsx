@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ConstructorPage,
@@ -15,11 +15,13 @@ import { getIngredients } from '../../services/actions/burger-ingredients';
 const App = () => { 
     const location = useLocation();
 
-    let background = location.state?.background;
+    const locationState = location.state as { background?: Location };
+    const background = locationState?.background;
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getIngredients());
     }, []);
   

@@ -11,7 +11,7 @@ import {
        } from '../actions/burger-сonstructor';
 
 const initialState = {
-    bun: {},
+    bun: null,
     constructorIngredients: [],
 
     orderRequest: false,
@@ -71,20 +71,17 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             }
         }
         case REMOVE_INGREDIENT: {
-            const hasBun = Object.keys(state.bun).length !== 0;
             const ingredients = [...state.constructorIngredients];
-            ingredients.splice(hasBun ? action.id - 1: action.id, 1);
+            ingredients.splice(state.bun ? action.id - 1: action.id, 1);
             return {
                 ...state,
                 constructorIngredients: ingredients
             }
         }
         case MOVE_INGREDIENT: {
-            const hasBun = Object.keys(state.bun).length !== 0;
-
             const ingredients = [...state.constructorIngredients];
-            ingredients.splice(hasBun ? action.currentId - 1 : action.currentId, 0 , 
-                ingredients.splice(hasBun ? action.prevId - 1 : action.prevId, 1)[0])
+            ingredients.splice(state.bun ? action.currentId - 1 : action.currentId, 0 , 
+                ingredients.splice(state.bun ? action.prevId - 1 : action.prevId, 1)[0])
             return {
                 ...state,
                 constructorIngredients: ingredients
@@ -93,7 +90,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case CLEAR_CONSTRUCTOR: {
             return {
                 ...state,
-                bun: {},
+                bun: null,
                 constructorIngredients: []
             };
         }

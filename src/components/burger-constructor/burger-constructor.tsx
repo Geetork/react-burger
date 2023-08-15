@@ -4,7 +4,6 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop } from 'react-dnd';
 import { v4 } from 'uuid';
 
-import Loader from '../loader/loader';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from './total-price';
 import ConstructorIngredient from './constructor-ingredient';
@@ -17,21 +16,27 @@ import { makeOrder,
          ADD_BUN,
          ADD_INGREDIENT} from '../../services/actions/burger-сonstructor';
 import { useNavigate } from 'react-router-dom';
+import { IIngredient, IDroppedIngredient } from '../../utils/types';
 
-const constructorIngredients = (bun, filling) => (
-    Object.keys(bun).length === 0 ? 
-        [...filling] :
+interface IBun extends IIngredient {
+    idTop: string;
+    idBottom: string;
+};
+
+const constructorIngredients = (bun: IBun | null, filling: Array<IDroppedIngredient>): IDroppedIngredient[] => (
+    bun ?
         [{...bun, id: bun.idTop},
-         ...filling,
-         {...bun, id: bun.idBottom}]
+            ...filling,
+            {...bun, id: bun.idBottom}] :
+        [...filling]    
 )
 
 const BurgerConstructor = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const isAuthorized = useSelector(store => store.authorization.isAuthorized);
+    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const navigate = useNavigate();
 
-    const { bun, filling } = useSelector(store => {
+    const { bun, filling } = useSelector((store: any) => {
         const ingredients = store.constructorIngredients;
         return {
             filling: ingredients.constructorIngredients,
@@ -39,19 +44,19 @@ const BurgerConstructor = () => {
         }
     });
 
-    const burgerIngredients = useSelector(store => 
+    const burgerIngredients = useSelector((store: any) => 
         store.ingredients.data);
 
     const dispatch = useDispatch();
 
-    const [{}, dropTargetRef] = useDrop({
+    const [, dropTargetRef] = useDrop({
         accept: ['burgerIngredient'],
-        drop(itemId) {
-            onDropHandler(bun, burgerIngredients, itemId);
+        drop(item: IIngredient) {
+            onDropHandler(bun, burgerIngredients, item);
         }
     });
 
-    const onDropHandler = (bun, data, ingredient) => {
+    const onDropHandler = (bun: IBun | null, data: IIngredient[], ingredient: IIngredient) => {
         ingredient.type === 'bun' ?
             dispatch({
                 type: ADD_BUN,
@@ -65,9 +70,11 @@ const BurgerConstructor = () => {
                 ingredient
             });
         ingredient.type === 'bun' &&
-            Object.keys(bun).length &&
+            bun &&
+            //@ts-ignore
             dispatch(decreaseCounter(data, bun._id));
-
+        
+        //@ts-ignore
         dispatch(increaseCounter(data, ingredient._id));
     };
 
@@ -78,6 +85,7 @@ const BurgerConstructor = () => {
         if (!isAuthorized) {
             navigate('/login');
         } else {
+            //@ts-ignore
             dispatch(makeOrder(ingredients))
             setIsVisible(true);
         };
@@ -87,18 +95,19 @@ const BurgerConstructor = () => {
         setIsVisible(false);
     };
 
-    const deleteIngredient = (e, id, _id, type) => {
-        if (type !== 'bun' && e.target.closest('span')?.classList.value ===
+    const deleteIngredient = (e: React.MouseEvent<HTMLElement>, id: number, _id: string, type: string) => {
+        if (type !== 'bun' && (e.target as HTMLButtonElement).closest('span')?.classList.value ===
             'constructor-element__action pr-2') {
             dispatch({
                 type: REMOVE_INGREDIENT,
                 id 
             });
+            //@ts-ignore
             dispatch(decreaseCounter(burgerIngredients, _id));
         }
     };
 
-    const moveIngredient = (prevId, currentId) => {
+    const moveIngredient = (prevId: number, currentId: number) => {
        dispatch({
         type: MOVE_INGREDIENT,
         prevId: prevId,
@@ -130,7 +139,7 @@ const BurgerConstructor = () => {
                     type="primary"
                     size="large"
                     onClick={handleOpenModal}
-                    disabled={Object.keys(bun).length === 0 ? true : false}>
+                    disabled={!bun ? true : false}>
                     Оформить заказ
                 </Button>
             </div>

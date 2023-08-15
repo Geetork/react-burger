@@ -1,17 +1,18 @@
+import { IIngredient } from '../../utils/types';
 import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
 const TotalPrice = () => {
-    const constructorIngredients = useSelector(store => 
+    const constructorIngredients = useSelector((store: any) => 
         store.constructorIngredients);
 
     const totalPrice = useMemo(() => {
         const ingredients = constructorIngredients
-            .constructorIngredients.reduce((acc, ingredient) => (
+            .constructorIngredients.reduce((acc: number, ingredient: IIngredient) => (
             acc += ingredient.price
         ), 0);
-        const bun = Object.keys(constructorIngredients.bun).length === 0 ? 0 :
+        const bun = !constructorIngredients.bun ? 0 :
             constructorIngredients.bun.price * 2;
 
         return ingredients + bun;

@@ -6,18 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_FORM_VALUE, resetPassword } from "../../services/actions/reset-password";
 
 const ResetPassword = () => {
-    const { pass, code } = useSelector(store => ({
+    const { pass, code } = useSelector((store: any) => ({
         pass: store.resetPassword.passwordReset,
         code: store.resetPassword.emailCode
     }));
 
     const dispatch = useDispatch();
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        //@ts-ignore
         dispatch(resetPassword(pass, code));
     }
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
             type: SET_FORM_VALUE,
             field: e.target.name,

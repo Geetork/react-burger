@@ -5,18 +5,19 @@ import { SWITCH_PROFILE_NAVIGATION_ITEM } from '../../services/actions/navigatio
 import { logout } from '../../services/actions/authorization';
 
 const ProfileNavigation = () => {
-    const currentTab = useSelector(store => store.navigation.profile);
+    const currentTab = useSelector((store: any) => store.navigation.profile);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const switchTab = (current) => {
+    const switchTab = (current: string) => {
         dispatch({ 
             type: SWITCH_PROFILE_NAVIGATION_ITEM,
             current: current
         });
     }
 
-    const signout = (e) => {
+    const signout = (e: React.MouseEvent<HTMLElement>) => {
+        //@ts-ignore
         dispatch(logout());
         navigate('/');
     }

@@ -1,13 +1,13 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from './profile.module.css';
 import { SET_FORM_VALUE, changeUserInfo, getUserInfo } from "../../services/actions/authorization";
 import { useEffect } from "react";
 
 const Profile = () => {
-    const { name, email, pass } = useSelector(store => ({
+    const { name, email, pass } = useSelector((store: any) => ({
         name: store.authorization.name,
         email: store.authorization.email,
         pass: store.authorization.password
@@ -18,7 +18,7 @@ const Profile = () => {
     const dispatch = useDispatch();
 
 
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
             type: SET_FORM_VALUE,
             field: e.target.name,
@@ -27,15 +27,18 @@ const Profile = () => {
     }
 
     const cancel = () => {
+        //@ts-ignore
         dispatch(getUserInfo());
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        //@ts-ignore
         dispatch(changeUserInfo(name, email, pass));
         console.log(navigate);
     }
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

@@ -1,11 +1,14 @@
+import { IIngredient } from "../../utils/types";
+import { FunctionComponent } from 'react';
 import Modal from "../modal/modal";
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { ingredientPropTypes } from "../../utils/prop-types";
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { useLocation, useNavigate } from "react-router-dom";
 
-export const IngredientDetailsContent = ({ ingredient }) => {
+interface IIngredientDetails {
+    ingredient: IIngredient;
+}
+
+export const IngredientDetailsContent: FunctionComponent<IIngredientDetails> = ({ ingredient }) => {
     return (
         <>
             <img className={ingredientDetailsStyles.img} src={ingredient.image_large} alt='oops...'/>
@@ -43,12 +46,8 @@ export const IngredientDetailsContent = ({ ingredient }) => {
     )
 }
 
-IngredientDetailsContent.propTypes = {
-    ingredient: PropTypes.shape({ ...ingredientPropTypes }).isRequired,
-}
-
-const IngredientDetails = ({ onClose }) => {
-    const ingredient = useSelector(store => store.ingredients.currentModalIngredient);
+const IngredientDetails: FunctionComponent<{onClose: () => void}> = ({ onClose }) => {
+    const ingredient = useSelector((store: any) => store.ingredients.currentModalIngredient);
     
     return (
         <Modal title='Детали ингредиента'
@@ -57,9 +56,5 @@ const IngredientDetails = ({ onClose }) => {
         </Modal>
     )
 }
-
-IngredientDetails.propTypes = { 
-    onClose: PropTypes.func.isRequired,
-};
 
 export default IngredientDetails;
