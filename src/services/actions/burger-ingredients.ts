@@ -1,4 +1,5 @@
 import { getIngredients as getIngredientsAPI } from "../../utils/api";
+import { IIngredient } from "../../utils/types";
 import { GET_CONSTRUCTOR_INGREDIENTS } from "./burger-сonstructor";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -11,6 +12,7 @@ export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 export const RESET_INGREDIENTS_COUNTERS = 'RESET_INGREDIENTS_COUNTERS';
 
 export function getIngredients() {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
@@ -32,30 +34,36 @@ export function getIngredients() {
     }
 };
 
-export function decreaseCounter(data, id) {
+export function decreaseCounter(data: IIngredient[], id: string) {
     const ingredient = data.find(item =>
         item._id === id);
     
-    const num = ingredient.type === 'bun' ? 2 : 1;
+    if (ingredient?.count) {
+        const num = ingredient.type === 'bun' ? 2 : 1;
 
-    ingredient['count'] -= num;
+        ingredient['count'] -= num;
+    }
 
+    //@ts-ignore
     return function(dispatch){
         dispatch({ type: 'DEFAULT' });
     };
 };
 
-export function increaseCounter(data, id) {
+export function increaseCounter(data: IIngredient[], id: string) {
     const ingredient = data.find(item =>
         item._id === id    
     );
     
-    const num = ingredient.type === 'bun' ? 2 : 1;
+    if (ingredient) {
+        const num = ingredient.type === 'bun' ? 2 : 1;
 
-    (ingredient && !ingredient?.count) ?
-        ingredient['count'] = num :
-        ingredient['count'] += num;
+        !ingredient?.count ?
+            ingredient['count'] = num :
+            ingredient['count'] += num;
+    }
 
+    //@ts-ignore
     return function(dispatch){
         dispatch({ type: 'DEFAULT' });
     }

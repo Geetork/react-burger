@@ -1,11 +1,10 @@
-import { FunctionComponent } from 'react';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { SWITCH_HEADER_ITEM } from '../../services/actions/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import appHeaderStyles from './app-header.module.css';
 
-const AppHeader: FunctionComponent = () => {
+const AppHeader: React.FC = () => {
     const current = useSelector((store: any) => store.navigation.header);
     const dispatch = useDispatch();
 

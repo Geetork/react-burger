@@ -12,7 +12,7 @@ import { ProtectedRouterElement } from '../../components/protected-router-elemen
 import AppHeader from '../app-header/app-header';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
-const App = () => { 
+const App: React.FC = () => { 
     const location = useLocation();
 
     const locationState = location.state as { background?: Location };

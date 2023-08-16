@@ -6,7 +6,7 @@ import styles from './register.module.css';
 import { SET_FORM_VALUE } from "../../services/actions/authorization";
 import { register } from "../../services/actions/authorization";
 
-const Register = () => {
+const Register: React.FC = () => {
     const { name, email, pass } = useSelector((store: any) => ({
         name: store.authorization.name,
         email: store.authorization.email,

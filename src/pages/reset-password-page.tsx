@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: React.FC = () => {
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const isPasswordReset = useSelector((store: any) => store.resetPassword.isPasswordReset);
     const location = useLocation();

@@ -4,7 +4,7 @@ import styles from './profile.module.css';
 import { SWITCH_PROFILE_NAVIGATION_ITEM } from '../../services/actions/navigation';
 import { logout } from '../../services/actions/authorization';
 
-const ProfileNavigation = () => {
+const ProfileNavigation: React.FC = () => {
     const currentTab = useSelector((store: any) => store.navigation.profile);
     const dispatch = useDispatch();
     const navigate = useNavigate();

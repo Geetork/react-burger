@@ -5,7 +5,7 @@ import pageStyles from './pages.module.css';
 import { useDispatch } from 'react-redux';
 import { SWITCH_HEADER_ITEM } from '../services/actions/navigation';
 
-const ProfilePage = () => {
+const ProfilePage: React.FC = () => {
     const dispatch = useDispatch();
   
     useEffect(() => {

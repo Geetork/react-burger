@@ -5,7 +5,7 @@ import pageStyles from './pages.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const location = useLocation();
     const dispatch = useDispatch();

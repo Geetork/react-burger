@@ -1,5 +1,5 @@
 import { XYCoord, useDrag, useDrop } from 'react-dnd';
-import { FunctionComponent, useRef } from 'react';
+import { useRef } from 'react';
 
 import { DragIcon,
          ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,7 +13,7 @@ interface IConstructorIngredient {
     moveIngredient: (dragIndex: number, hoverIndex: number) => void;
 }
 
-const ConstructorIngredient: FunctionComponent<IConstructorIngredient> = ({ 
+const ConstructorIngredient: React.FC<IConstructorIngredient> = ({ 
     id,
     ingredient,
     deleteIngredient,

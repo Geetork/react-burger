@@ -1,11 +1,11 @@
-import { useEffect, FunctionComponent, PropsWithChildren } from 'react';
+import { useEffect, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
 
 const modalRoot = document.getElementById("modal") as Element;
 
-const ModalOverlay: FunctionComponent<{ handleCloseModal: () => void }> = ({
+const ModalOverlay: React.FC<{ handleCloseModal: () => void }> = ({
     handleCloseModal }) => {
     return (
         <div onClick={handleCloseModal} 
@@ -18,7 +18,7 @@ type TModal = {
     onClose: () => void;
 };
 
-const Modal: FunctionComponent<PropsWithChildren<TModal>> = (props) => {
+const Modal: React.FC<PropsWithChildren<TModal>> = (props) => {
     const handleCloseModal = () => {
         props.onClose();
     };

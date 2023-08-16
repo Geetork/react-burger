@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styles from './login.module.css';
 import { login, SET_FORM_VALUE } from "../../services/actions/authorization";
 
-const Login = () => {
+const Login: React.FC = () => {
     const { email, pass } = useSelector((store: any) => ({
         email: store.authorization.email,
         pass: store.authorization.password

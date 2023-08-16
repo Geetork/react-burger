@@ -6,7 +6,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 import mainStyles from './main.module.css';
 
-const Main = () => {
+const Main: React.FC = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <main className={`${mainStyles.container}`}>

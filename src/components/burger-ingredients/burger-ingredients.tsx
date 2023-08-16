@@ -1,4 +1,4 @@
-import { useState, FunctionComponent } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,14 +7,14 @@ import { IIngredient } from '../../utils/types';
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
-import { Link, NavLink, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 interface IBurgerIngredient {
     ingredient: IIngredient;
     handleOpenModal: () => void;
 }
 
-const BurgerIngredient: FunctionComponent<IBurgerIngredient> = ({ ingredient, handleOpenModal }) => {
+const BurgerIngredient: React.FC<IBurgerIngredient> = ({ ingredient, handleOpenModal }) => {
     const counter = useSelector((store: any) => 
         store.ingredients.data.find((item: IIngredient) => 
             item._id === ingredient._id)?.count);
@@ -69,14 +69,16 @@ const BurgerIngredient: FunctionComponent<IBurgerIngredient> = ({ ingredient, ha
 
 const tabs = ['Булки', 'Соусы', 'Начинки'];
 
+type TIngredientType = 'Булки' | 'Соусы' | 'Начинки';
+type TIngredientTypeName = 'bun' | 'sauce' | 'main';
 
-const ingredientType: {[name: string]: string} = {
+const ingredientType: Record<TIngredientType, TIngredientTypeName> = {
     'Булки': 'bun',
     'Соусы': 'sauce',
     'Начинки': 'main'
 };
 
-const BurgerIngredients = () => {
+const BurgerIngredients: React.FC = () => {
     const [current, setCurrent] = useState('Булки');
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
@@ -136,7 +138,7 @@ const BurgerIngredients = () => {
                             <div className={ingredientsStyles.ingredients__list}>
                             {   
                                 data.map((ingredient: IIngredient, id: string) => {
-                                    if (ingredient.type === ingredientType[title])
+                                    if (ingredient.type === ingredientType[title as TIngredientType])
                                         return (
                                                 <BurgerIngredient
                                                         handleOpenModal={handleOpenModal} 

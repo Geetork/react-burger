@@ -1,5 +1,4 @@
 import { IIngredient } from "../../utils/types";
-import { FunctionComponent } from 'react';
 import Modal from "../modal/modal";
 import { useSelector } from 'react-redux';
 import ingredientDetailsStyles from './ingredient-details.module.css';
@@ -8,7 +7,7 @@ interface IIngredientDetails {
     ingredient: IIngredient;
 }
 
-export const IngredientDetailsContent: FunctionComponent<IIngredientDetails> = ({ ingredient }) => {
+export const IngredientDetailsContent: React.FC<IIngredientDetails> = ({ ingredient }) => {
     return (
         <>
             <img className={ingredientDetailsStyles.img} src={ingredient.image_large} alt='oops...'/>
@@ -46,7 +45,7 @@ export const IngredientDetailsContent: FunctionComponent<IIngredientDetails> = (
     )
 }
 
-const IngredientDetails: FunctionComponent<{onClose: () => void}> = ({ onClose }) => {
+const IngredientDetails: React.FC<{onClose: () => void}> = ({ onClose }) => {
     const ingredient = useSelector((store: any) => store.ingredients.currentModalIngredient);
     
     return (

@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import ForgotPassword from "../components/forgot-password/forgot-password";
 import pageStyles from './pages.module.css';
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: React.FC = () => {
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const emailRequest = useSelector((store: any) => store.resetPassword.gotEmail);
     const location = useLocation();

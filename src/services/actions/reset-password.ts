@@ -13,7 +13,8 @@ export const SET_FORM_VALUE = 'SET_FORGOT_PASSWORD_VALUE_FORM';
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 
-export function getResetPasswordEmail(email) {
+export function getResetPasswordEmail(email: string) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: GET_RESET_PASSWORD_EMAIL_REQUEST
@@ -31,7 +32,8 @@ export function getResetPasswordEmail(email) {
     }
 };
 
-export function resetPassword(pass, token) {
+export function resetPassword(pass: string, token: string) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: RESET_PASSWORD_EMAIL_REQUEST

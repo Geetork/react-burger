@@ -1,4 +1,5 @@
 import { makeOrder as makeOrderAPI } from "../../utils/api";
+import { IDroppedIngredient } from "../../utils/types";
 import { RESET_INGREDIENTS_COUNTERS } from "./burger-ingredients";
 
 export const GET_CONSTRUCTOR_INGREDIENTS = 'GET_CONSTRUCTOR_INGREDIENTS';
@@ -13,13 +14,14 @@ export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 
 export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 
-export function makeOrder(ingredients) {
+export function makeOrder(ingredients: IDroppedIngredient[]) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: POST_ORDER_REQUEST
         });
 
-        makeOrderAPI(ingredients)
+        makeOrderAPI(ingredients as IDroppedIngredient[])
         .then(res => {
             dispatch({
                 type: POST_ORDER_SUCCESS,

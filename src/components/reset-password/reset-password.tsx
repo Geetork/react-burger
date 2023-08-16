@@ -5,7 +5,7 @@ import styles from './reset-password.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { SET_FORM_VALUE, resetPassword } from "../../services/actions/reset-password";
 
-const ResetPassword = () => {
+const ResetPassword: React.FC = () => {
     const { pass, code } = useSelector((store: any) => ({
         pass: store.resetPassword.passwordReset,
         code: store.resetPassword.emailCode

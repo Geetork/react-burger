@@ -6,7 +6,8 @@ import { register as registerAPI,
          logout as logoutAPI,
         } from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
-import { SET_NAVIGATION_INITIAL_STATE, SWITCH_HEADER_ITEM, SWITCH_PROFILE_NAVIGATION_ITEM } from './navigation';
+import { SWITCH_HEADER_ITEM } from './navigation';
+import { Middleware } from 'redux';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_FAILED = 'REGISTER_FAILED';
@@ -30,7 +31,8 @@ export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
 
 export const SET_FORM_VALUE = 'SET_FORM_VALUE';
 
-export function register(name, email, pass) {
+export function register(name: string, email: string, pass: string) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: REGISTER_REQUEST
@@ -53,7 +55,8 @@ export function register(name, email, pass) {
     }
 }
 
-export function login(email, pass) {
+export function login(email: string, pass: string) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: LOGIN_REQUEST
@@ -77,6 +80,7 @@ export function login(email, pass) {
 }
 
 export function logout() {
+    //@ts-ignore
     return function(dispatch) {
         logoutAPI()
         .then(res => {
@@ -95,6 +99,7 @@ export function logout() {
 }
 
 export function getUserInfo() {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: GET_USER_INFO_REQUEST
@@ -110,6 +115,7 @@ export function getUserInfo() {
         })
         .catch((res) => {
             if (res.message === 'jwt expired') {
+                //@ts-ignore
                 dispatch(refreshToken(getUserInfo()));
             } else {
                 dispatch({
@@ -120,7 +126,8 @@ export function getUserInfo() {
     }
 }
 
-export function changeUserInfo(name, email, password) {
+export function changeUserInfo(name: string, email: string, password: string) {
+    //@ts-ignore
     return function(dispatch) {
         dispatch({
             type: GET_CHANGE_USER_INFO_REQUEST
@@ -135,6 +142,7 @@ export function changeUserInfo(name, email, password) {
         })
         .catch((res) => {
             if (res.message === 'jwt expired') {
+                //@ts-ignore
                 dispatch(refreshToken(changeUserInfo(name, email, password)));
             } else {
                 dispatch(getUserInfo());
@@ -143,7 +151,8 @@ export function changeUserInfo(name, email, password) {
     }
 }
 
-export function refreshToken(next) {
+export function refreshToken(next: Middleware) {
+    //@ts-ignore
     return function(dispatch) {
         refreshTokenAPI()
         .then(res => {

@@ -6,7 +6,7 @@ import styles from './profile.module.css';
 import { SET_FORM_VALUE, changeUserInfo, getUserInfo } from "../../services/actions/authorization";
 import { useEffect } from "react";
 
-const Profile = () => {
+const Profile: React.FC = () => {
     const { name, email, pass } = useSelector((store: any) => ({
         name: store.authorization.name,
         email: store.authorization.email,

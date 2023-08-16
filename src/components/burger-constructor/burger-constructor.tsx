@@ -31,7 +31,7 @@ const constructorIngredients = (bun: IBun | null, filling: Array<IDroppedIngredi
         [...filling]    
 )
 
-const BurgerConstructor = () => {
+const BurgerConstructor: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const navigate = useNavigate();

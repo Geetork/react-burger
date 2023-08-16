@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
 
-const RegisterPage = () => {
+const RegisterPage: React.FC = () => {
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const dispatch = useDispatch();
 

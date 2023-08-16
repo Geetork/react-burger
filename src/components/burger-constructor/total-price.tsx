@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
-const TotalPrice = () => {
+const TotalPrice: React.FC = () => {
     const constructorIngredients = useSelector((store: any) => 
         store.constructorIngredients);
 

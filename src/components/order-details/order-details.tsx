@@ -1,11 +1,10 @@
-import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import Loader from '../loader/loader';
 import Modal from '../modal/modal';
 import checkMark from './graphics.svg';
 
-const OrderDetails: FunctionComponent<{onClose: () => void}> = ({ onClose }) => {
+const OrderDetails: React.FC<{onClose: () => void}> = ({ onClose }) => {
     const { order, isLoading } = useSelector((store: any) => ({
         order: store.constructorIngredients.order,
         isLoading: store.constructorIngredients.isLoading

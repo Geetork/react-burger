@@ -7,7 +7,7 @@ import { getResetPasswordEmail } from "../../services/actions/reset-password";
 import { SET_FORM_VALUE } from "../../services/actions/reset-password";
 import styles from './forgot-password.module.css';
 
-const ForgotPassword = () => {
+const ForgotPassword: React.FC = () => {
     const value = useSelector((store: any) => store.resetPassword.emailForgotPassword);
     const dispatch = useDispatch();
 

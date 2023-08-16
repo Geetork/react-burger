@@ -6,7 +6,7 @@ import Main from '../components/main/main';
 import appStyles from './pages.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const ConstructorPage = () => {
+const ConstructorPage: React.FC = () => {
     const path = window.location.pathname;
     const navigate = useNavigate();
 
