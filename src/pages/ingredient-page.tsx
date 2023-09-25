@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { IngredientDetailsContent } from "../components/ingredient-details/ingredient-details"
 import { useSelector } from "react-redux"
 import styles from './pages.module.css';

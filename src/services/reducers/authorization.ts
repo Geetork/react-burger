@@ -10,6 +10,7 @@ import { REGISTER_REQUEST,
          GET_CHANGE_USER_INFO_REQUEST,
          CHANGE_USER_INFO_SUCCESS,
          LOGOUT_SUCCESS,
+         TAuthorization,
          } from "../actions/authorization";
 
 const initialState = {
@@ -23,7 +24,7 @@ const initialState = {
     isAuthorized: false,
 }
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authorizationReducer = (state = initialState, action: TAuthorization) => {
     switch (action.type) {
         case REGISTER_REQUEST:
         case LOGIN_REQUEST:

@@ -13,8 +13,6 @@ const Profile: React.FC = () => {
         pass: store.authorization.password
     }));
 
-    const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
 
@@ -34,7 +32,6 @@ const Profile: React.FC = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         //@ts-ignore
         dispatch(changeUserInfo(name, email, pass));
-        console.log(navigate);
     }
 
     useEffect(() => {

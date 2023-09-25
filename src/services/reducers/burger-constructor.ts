@@ -1,3 +1,4 @@
+import { IIngredient, IBun } from '../../utils/types';
 import {
         GET_CONSTRUCTOR_INGREDIENTS,
         POST_ORDER_REQUEST,
@@ -7,10 +8,20 @@ import {
         ADD_BUN,
         REMOVE_INGREDIENT,
         MOVE_INGREDIENT,
-        CLEAR_CONSTRUCTOR
+        CLEAR_CONSTRUCTOR,
+        TBurgerConstructorActions
        } from '../actions/burger-сonstructor';
 
-const initialState = {
+type TBurgerConstructor = {
+    bun: IBun | null,
+    constructorIngredients: ReadonlyArray<IIngredient>,
+    orderRequest: boolean,
+    orderFailed: boolean,
+    order: string,
+    isLoading: boolean,
+}
+
+const initialState: TBurgerConstructor = {
     bun: null,
     constructorIngredients: [],
 
@@ -21,7 +32,7 @@ const initialState = {
     isLoading: false,
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructorActions) => {
     switch(action.type) {
         case GET_CONSTRUCTOR_INGREDIENTS: {
             return state;

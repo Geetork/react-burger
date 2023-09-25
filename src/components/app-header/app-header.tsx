@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SWITCH_HEADER_ITEM } from '../../services/actions/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import appHeaderStyles from './app-header.module.css';
+import { useEffect } from 'react';
 
 const AppHeader: React.FC = () => {
     const current = useSelector((store: any) => store.navigation.header);
@@ -13,7 +14,7 @@ const AppHeader: React.FC = () => {
             type: SWITCH_HEADER_ITEM,
             current: current
         });
-    }
+    };
 
     return (
         <header className={appHeaderStyles.header}>
@@ -30,7 +31,7 @@ const AppHeader: React.FC = () => {
                     <div className={appHeaderStyles.menu__first_item}>
                         <ListIcon type='primary'/>
                         <span className={current === 'orders' ? `ml-2` : `ml-2 text_color_inactive`}>
-                            <Link className={appHeaderStyles.button} to='/'
+                            <Link className={appHeaderStyles.button} to='/feed'
                                 onClick={() => switchTab('orders')}>Лента заказов</Link>
                         </span> 
                     </div>  

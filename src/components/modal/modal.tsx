@@ -2,6 +2,7 @@ import { useEffect, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
+import { useLocation } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal") as Element;
 

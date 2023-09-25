@@ -5,7 +5,9 @@ import { GET_RESET_PASSWORD_EMAIL_REQUEST,
          RESET_PASSWORD_EMAIL_SUCCESS,
          RESET_PASSWORD_EMAIL_FAILED,
          SET_FORM_VALUE,
-         SET_INITIAL_STATE} from "../actions/reset-password"
+         SET_INITIAL_STATE,
+         TResetPasswordActions
+        } from "../actions/reset-password"
 
 const initialState = {
     request: false,
@@ -19,7 +21,7 @@ const initialState = {
     emailCode: '',
 }
 
-export const resetPasswordReducer = (state = initialState, action) => {
+export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions) => {
     switch(action.type) {
         case GET_RESET_PASSWORD_EMAIL_REQUEST:
         case RESET_PASSWORD_EMAIL_REQUEST: {

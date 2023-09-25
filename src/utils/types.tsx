@@ -14,6 +14,11 @@ export interface IIngredient {
     count?: number;
 }
 
+export interface IBun extends IIngredient {
+    idTop: string;
+    idBottom: string;
+};
+
 export interface IDroppedIngredient extends IIngredient {
     id: string;
 }
@@ -51,3 +56,20 @@ export type TLogout = TServerResponse<{
 export type TResetPassword = TServerResponse<{
     message: string
 }>
+
+export interface IWSOrder {
+    ingredients: string[];
+    _id: string;
+    status: string;
+    number: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IWSOrders {
+    success: boolean;
+    orders: IWSOrder[];
+    total: number;
+    totalToday: number;
+  } 

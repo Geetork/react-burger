@@ -6,6 +6,8 @@ import { rootReducer } from './services/reducers/index';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { socketMiddleware } from './services/middleware/socket-middleware';
+import { wsActions, wsHistoryActions } from './services/actions/web-socket';
 
 declare global {
     interface Window {
@@ -17,7 +19,13 @@ const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     || compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const URL = 'wss://norma.nomoreparties.space/orders';
+const wsUrl = `${URL}/all`;
+const wsHistoryUrl = `${URL}`;
+
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk,
+    socketMiddleware(wsUrl, wsActions),
+    socketMiddleware(wsHistoryUrl, wsHistoryActions))));
 
 const root = ReactDOM.createRoot(document.querySelector('#root') as HTMLDivElement);
 root.render(

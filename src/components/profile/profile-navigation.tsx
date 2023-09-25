@@ -34,7 +34,7 @@ const ProfileNavigation: React.FC = () => {
                     <span className={currentTab === 'orders' ? `` : `text_color_inactive`}> 
                         <Link className={styles.span}
                             onClick={() => switchTab('orders')}
-                            to='/profile'>История заказов</Link>
+                            to='/profile/orders'>История заказов</Link>
                     </span>
                     <span className={currentTab === 'signout' ? `` : `text_color_inactive`}
                         onClick={() => {switchTab('profile')}}>

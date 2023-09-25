@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Main from '../components/main/main';
 
 import appStyles from './pages.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ConstructorPage: React.FC = () => {
     const path = window.location.pathname;

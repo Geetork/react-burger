@@ -16,12 +16,7 @@ import { makeOrder,
          ADD_BUN,
          ADD_INGREDIENT} from '../../services/actions/burger-сonstructor';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient, IDroppedIngredient } from '../../utils/types';
-
-interface IBun extends IIngredient {
-    idTop: string;
-    idBottom: string;
-};
+import { IIngredient, IDroppedIngredient, IBun } from '../../utils/types';
 
 const constructorIngredients = (bun: IBun | null, filling: Array<IDroppedIngredient>): IDroppedIngredient[] => (
     bun ?

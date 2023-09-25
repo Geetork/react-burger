@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ConstructorPage,
@@ -7,7 +7,10 @@ import { ConstructorPage,
         ProfilePage, 
         RegisterPage, 
         ResetPasswordPage,
-        IngredientPage } from '../../pages/index';
+        IngredientPage,
+        FeedPage,
+        FeedOrderPage,
+     } from '../../pages/index';
 import { ProtectedRouterElement } from '../../components/protected-router-element/protected-router-element';
 import AppHeader from '../app-header/app-header';
 import { getIngredients } from '../../services/actions/burger-ingredients';
@@ -21,7 +24,6 @@ const App: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getIngredients());
     }, []);
   
@@ -37,7 +39,10 @@ const App: React.FC = () => {
                 <Route path='/reset-password' element={<ResetPasswordPage/>}/>
                 <Route path='/profile' element={<ProtectedRouterElement element={<ProfilePage/>}/>}/>
                 <Route path='/profile/orders' element={<ProtectedRouterElement element={<ProfilePage/>}/>}/>
-                <Route path='/profile/orders/:id' element={<ProtectedRouterElement element={<ProfilePage/>}/>}/>
+                <Route path='/profile/orders/:id' element={
+                    <ProtectedRouterElement element={<FeedOrderPage reducer='websocketHistory' />}/>}/>
+                <Route path='/feed' element={<FeedPage/>}/>
+                <Route path='/feed/:id' element={<FeedOrderPage reducer='websocket'/>}/>
             </Routes>
         </div>
     )

@@ -1,20 +1,29 @@
+import { IIngredient } from "../../utils/types";
 import { GET_INGREDIENTS_REQUEST,
          GET_INGREDIENTS_SUCCESS,
          GET_INGREDIENTS_FAILED,
          OPEN_INGREDIENT_MODAL,
          CLOSE_INGREDIENT_MODAL,
          RESET_INGREDIENTS_COUNTERS,
+         TBurgerIngredientsActions,
          } from "../actions/burger-ingredients";
 
-const initialState = {
+type TBurgerIngredientsState = {
+    data: ReadonlyArray<IIngredient>,
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
+    currentModalIngredient: IIngredient | null
+}
+
+const initialState: TBurgerIngredientsState = {
     data: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
 
-    currentModalIngredient: {},
+    currentModalIngredient: null,
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

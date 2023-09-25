@@ -18,6 +18,7 @@
     height: 100%;
     display: flex;
     flex-direction: row;
+    gap: 60px;
 }
 
 .ingredient__container {
@@ -32,6 +33,16 @@
     width: 100%;
     height: 100%;
     background-color: #131316;
+}
+
+.feed__container {
+    width: 1248px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: space-between;
+    gap: 60px;
 }
 
 *::-webkit-scrollbar {

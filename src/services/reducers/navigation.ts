@@ -1,6 +1,7 @@
 import { SWITCH_PROFILE_NAVIGATION_ITEM,
          SWITCH_HEADER_ITEM,
-         SET_NAVIGATION_INITIAL_STATE } from "../actions/navigation";
+         SET_NAVIGATION_INITIAL_STATE,
+         TNavigationActions } from "../actions/navigation";
 
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
     header: 'constructor'
 }
 
-export const profileNavigationReducer = (state = initialState, action) => {
+export const profileNavigationReducer = (state = initialState, action: TNavigationActions) => {
     switch (action.type) {
         case SWITCH_PROFILE_NAVIGATION_ITEM: {
             return ({
