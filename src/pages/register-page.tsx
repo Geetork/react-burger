@@ -5,13 +5,14 @@ import pageStyles from './pages.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
+import { RootState } from "../utils/types";
+import { AppDispatch } from "../services/actions/navigation";
 
 const RegisterPage: React.FC = () => {
-    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
-    const dispatch = useDispatch();
+    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

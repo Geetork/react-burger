@@ -16,6 +16,7 @@ export const WS_HISTORY_SEND_MESSAGE: 'WS_HISTORY_SEND_MESSAGE' = 'WS_HISTORY_SE
 
 export interface IWSConnectionStart {
     readonly type: typeof WS_CONNECTION_START;
+    readonly payload: string;
 }
 
 export interface IWSConnectionSuccess {
@@ -70,6 +71,7 @@ export const wsActions: TWSStoreActions = {
 
 export interface IWSHistoryConnectionStart {
     readonly type: typeof WS_HISTORY_CONNECTION_START;
+    readonly payload: string;
 }
 
 export interface IWSHistoryConnectionSuccess {

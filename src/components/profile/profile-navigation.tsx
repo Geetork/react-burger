@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './profile.module.css';
-import { SWITCH_PROFILE_NAVIGATION_ITEM } from '../../services/actions/navigation';
+import { AppDispatch, SWITCH_PROFILE_NAVIGATION_ITEM } from '../../services/actions/navigation';
+import { RootState } from '../../utils/types';
 import { logout } from '../../services/actions/authorization';
 
 const ProfileNavigation: React.FC = () => {
-    const currentTab = useSelector((store: any) => store.navigation.profile);
-    const dispatch = useDispatch();
+    const currentTab = useSelector((store: RootState) => store.navigation.profile);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const switchTab = (current: string) => {
@@ -17,7 +18,6 @@ const ProfileNavigation: React.FC = () => {
     }
 
     const signout = (e: React.MouseEvent<HTMLElement>) => {
-        //@ts-ignore
         dispatch(logout());
         navigate('/');
     }

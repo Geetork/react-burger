@@ -2,7 +2,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import styles from './feed.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { IIngredient, IWSOrder } from '../../utils/types';
+import { IIngredient, IWSOrder, RootState } from '../../utils/types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../modal/modal';
 import FeedOrder from '../feed-order/feed-order';
@@ -30,7 +30,7 @@ interface IWSGenOrder extends IWSOrder {
 }
 
 const Order: React.FC<IWSGenOrder> = (props) => {
-    const ingredients: IIngredient[] = useSelector((store: any) => store.ingredients.data);
+    const ingredients = useSelector((store: RootState) => store.ingredients.data);
     const [ orderIngredients, setOrderIngredients ] = useState<string[]>([]);
     const [ totalPrice, setTotalPrice ] = useState(0);
     const location = useLocation();
@@ -101,7 +101,11 @@ const Order: React.FC<IWSGenOrder> = (props) => {
 }
 
 const Feed: React.FC<{ reducer: 'websocket' | 'websocketHistory'}> = ({ reducer }) => {
-    const feed = useSelector((store: any) => store[reducer].orders);
+    const URL = 'wss://norma.nomoreparties.space/orders';
+    const wsUrl = `${URL}/all`;
+    const wsHistoryUrl = `${URL}`;
+
+    const feed = useSelector((store: RootState) => store[reducer].orders);
     const [ isVisible, setIsVisible ] = useState(false);
     const [ visibleOrderId, setVisibleOrderId ] = useState('');
     const navigate = useNavigate();
@@ -121,7 +125,9 @@ const Feed: React.FC<{ reducer: 'websocket' | 'websocketHistory'}> = ({ reducer 
         dispatch({
             type: reducer === 'websocket' ?
                 WS_CONNECTION_START :
-                WS_HISTORY_CONNECTION_START
+                WS_HISTORY_CONNECTION_START,
+            payload: reducer === 'websocket' ?
+                wsUrl : wsHistoryUrl,
         });
 
         return () => {

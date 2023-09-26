@@ -4,17 +4,18 @@ import pageStyles from './pages.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
+import { RootState } from "../utils/types";
+import { AppDispatch } from "../services/actions/navigation";
 
 const ResetPasswordPage: React.FC = () => {
-    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
-    const isPasswordReset = useSelector((store: any) => store.resetPassword.isPasswordReset);
+    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
+    const isPasswordReset = useSelector((store: RootState) => store.resetPassword.isPasswordReset);
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const fromPage = location.state?.from?.pathname || '/';
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

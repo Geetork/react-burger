@@ -6,7 +6,7 @@ import { register as registerAPI,
          logout as logoutAPI,
         } from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
-import { SWITCH_HEADER_ITEM } from './navigation';
+import { AppDispatch, SWITCH_HEADER_ITEM } from './navigation';
 import { Middleware } from 'redux';
 
 export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST';
@@ -117,8 +117,8 @@ export type TAuthorization = IRegisterAction |
     IRefreshTokenAction |
     ISetFormValueAction;
 
-export function register(name: string, email: string, pass: string): any {
-    return function(dispatch: any) {
+export function register(name: string, email: string, pass: string) {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: REGISTER_REQUEST
         });
@@ -142,7 +142,7 @@ export function register(name: string, email: string, pass: string): any {
 }
 
 export function login(email: string, pass: string) {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: LOGIN_REQUEST
         });
@@ -165,7 +165,7 @@ export function login(email: string, pass: string) {
 }
 
 export function logout() {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         logoutAPI()
         .then(res => {
             deleteCookie('token');
@@ -183,7 +183,7 @@ export function logout() {
 }
 
 export function getUserInfo() {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: GET_USER_INFO_REQUEST
         });
@@ -209,15 +209,19 @@ export function getUserInfo() {
 }
 
 export function changeUserInfo(name: string, email: string, password: string) {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({
-            type: GET_CHANGE_USER_INFO_REQUEST
+            type: GET_CHANGE_USER_INFO_REQUEST,
+            name: name,
+            email: email,
         });
 
         changeUserInfoAPI(name, email, password)
         .then((res) => {
             dispatch({
                 type: CHANGE_USER_INFO_SUCCESS,
+                name: name,
+                email: email,
             });
             
         })
@@ -231,11 +235,11 @@ export function changeUserInfo(name: string, email: string, password: string) {
     }
 }
 
-export function refreshToken(next: Middleware) {
-    return function(dispatch: any): any {
+export function refreshToken(next: any) {
+    return function(dispatch: any) {
         refreshTokenAPI()
         .then(res => {
-            dispatch(next);
+            next && dispatch(next);
         })
         .catch(res => {
             dispatch({ type: 'DEFAULT'})

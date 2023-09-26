@@ -1,3 +1,5 @@
+import { store } from "../index";
+
 export interface IIngredient {
     _id: string;
     name: string;
@@ -73,3 +75,5 @@ export interface IWSOrders {
     total: number;
     totalToday: number;
   } 
+
+export type RootState = ReturnType<typeof store.getState>;

@@ -1,5 +1,7 @@
 import { getResetPasswordEmail as getResetPasswordEmailAPI,
          resetPassword as resetPasswordAPI } from "../../utils/api";
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from "../../utils/types";
 
 export const GET_RESET_PASSWORD_EMAIL_REQUEST: 'GET_RESET_PASSWORD_EMAIL_REQUEST' = 'GET_RESET_PASSWORD_EMAIL_REQUEST';
 export const GET_RESET_PASSWORD_EMAIL_SUCCESS: 'GET_RESET_PASSWORD_EMAIL_SUCCESS' = 'GET_RESET_PASSWORD_EMAIL_SUCCESS';
@@ -56,8 +58,10 @@ export type TResetPasswordActions = IGetResetPasswordEmailRequest |
     ISetFormValue |
     ISetInitialState;
 
+export type AppDispatch = ThunkDispatch<RootState, unknown, TResetPasswordActions>;
+
 export function getResetPasswordEmail(email: string) {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: GET_RESET_PASSWORD_EMAIL_REQUEST
         });
@@ -75,7 +79,7 @@ export function getResetPasswordEmail(email: string) {
 };
 
 export function resetPassword(pass: string, token: string) {
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: RESET_PASSWORD_EMAIL_REQUEST
         })

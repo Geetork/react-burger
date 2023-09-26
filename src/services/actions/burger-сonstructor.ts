@@ -1,7 +1,8 @@
+import { ThunkDispatch } from "redux-thunk";
 import { makeOrder as makeOrderAPI } from "../../utils/api";
-import { IDroppedIngredient, IIngredient } from "../../utils/types";
-import { RESET_INGREDIENTS_COUNTERS } from "./burger-ingredients";
-import { WS_HISTORY_CONNECTION_START, WS_HISTORY_SEND_MESSAGE } from "./web-socket";
+import { getCookie } from "../../utils/cookie";
+import { IIngredient, RootState } from "../../utils/types";
+import { RESET_INGREDIENTS_COUNTERS, TBurgerIngredientsActions } from "./burger-ingredients";
 
 export const GET_CONSTRUCTOR_INGREDIENTS: 'GET_CONSTRUCTOR_INGREDIENTS' = 'GET_CONSTRUCTOR_INGREDIENTS';
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
@@ -70,13 +71,15 @@ export type TBurgerConstructorActions = IGetConstructorIngredients |
     IPostOrderSucess |
     IClearConstructor;
 
-export function makeOrder(ingredients: IDroppedIngredient[]) {
-    return function(dispatch: any): any {
+type AppDispatch = ThunkDispatch<RootState, unknown, TBurgerConstructorActions | TBurgerIngredientsActions>;
+
+export function makeOrder(ingredients: string[]) {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: POST_ORDER_REQUEST
         });
-
-        makeOrderAPI(ingredients as IDroppedIngredient[])
+        
+        getCookie('token') && makeOrderAPI(ingredients)
         .then(res => {
             
             dispatch({
@@ -91,5 +94,6 @@ export function makeOrder(ingredients: IDroppedIngredient[]) {
                 type: POST_ORDER_FAILED
             })
         })
+
     }
 };

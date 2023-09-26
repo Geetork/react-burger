@@ -4,13 +4,13 @@ import type { ThunkDispatch } from 'redux-thunk';
 import { TWSAllActions, TWSAllStoreActions } from '../actions/web-socket';
 
 import { store } from '../../index';
-import { IWSOrders } from '../../utils/types';
 import { getCookie } from '../../utils/cookie';
+import { refreshToken } from '../actions/authorization';
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, TWSAllActions>;
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSAllStoreActions): Middleware => {
+export const socketMiddleware = (wsActions: TWSAllStoreActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
@@ -21,7 +21,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSAllStoreActions): 
       const token = getCookie('token')?.split(' ')[1];
 
       if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}?token=${token}`);
+        socket = new WebSocket(`${action.payload}?token=${token}`);
       }
       if (socket) {
         socket.onopen = event => {
@@ -34,11 +34,15 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSAllStoreActions): 
 
         socket.onmessage = event => {
           const { data } = event;
-          const parsedData: IWSOrders = JSON.parse(data);
+          const parsedData = JSON.parse(data);
           const { success, ...restParsedData } = parsedData;
-          console.log(parsedData);
-          success &&
+
+          if (success) {
             dispatch({ type: onMessage, payload: { ...restParsedData } });
+          } else {
+            parsedData.message === 'Invalid or missing token' &&
+              dispatch(refreshToken(null));
+          }         
         };
 
         socket.onclose = event => {

@@ -4,18 +4,19 @@ import { Link } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { SET_FORM_VALUE, resetPassword } from "../../services/actions/reset-password";
+import { RootState } from "../../utils/types";
+import { AppDispatch } from "../../services/actions/navigation";
 
 const ResetPassword: React.FC = () => {
-    const { pass, code } = useSelector((store: any) => ({
+    const { pass, code } = useSelector((store: RootState) => ({
         pass: store.resetPassword.passwordReset,
         code: store.resetPassword.emailCode
     }));
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(resetPassword(pass, code));
     }
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

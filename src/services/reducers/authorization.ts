@@ -13,6 +13,15 @@ import { REGISTER_REQUEST,
          TAuthorization,
          } from "../actions/authorization";
 
+type TAutorizationState = {
+    request: boolean,
+    requestFailed: boolean,
+    name: string,
+    password: string,
+    email: string,
+    isAuthorized: boolean,
+};
+
 const initialState = {
     request: false,
     requestFailed: false,
@@ -24,7 +33,7 @@ const initialState = {
     isAuthorized: false,
 }
 
-export const authorizationReducer = (state = initialState, action: TAuthorization) => {
+export const authorizationReducer = (state = initialState, action: TAuthorization) : TAutorizationState => {
     switch (action.type) {
         case REGISTER_REQUEST:
         case LOGIN_REQUEST:

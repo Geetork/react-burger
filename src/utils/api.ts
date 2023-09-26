@@ -33,11 +33,12 @@ const request = <T>(endpoint: RequestInfo, options?: RequestInit) => {
 
 export const getIngredients = () => request(`/ingredients`);
 
-export const makeOrder = (data: IDroppedIngredient[]) => request<TOrderResponse>(`/orders`, {
+export const makeOrder = (data: string[]) => request<TOrderResponse>(`/orders`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
-    },
+        authorization: getCookie('token')
+    } as HeadersInit,
     body: JSON.stringify({
         ingredients: data,
     }),

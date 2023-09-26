@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 
 import styles from './login.module.css';
 import { login, SET_FORM_VALUE } from "../../services/actions/authorization";
+import { RootState } from "../../utils/types";
+import { AppDispatch } from "../../services/actions/navigation";
 
 const Login: React.FC = () => {
-    const { email, pass } = useSelector((store: any) => ({
+    const { email, pass } = useSelector((store: RootState) => ({
         email: store.authorization.email,
         pass: store.authorization.password
     }));
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(login(email, pass));
     };
 

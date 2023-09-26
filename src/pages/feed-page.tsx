@@ -19,9 +19,7 @@ const FeedPage: React.FC = () => {
             type: SWITCH_HEADER_ITEM,
             current: 'orders'
         });
-        // dispatch({
-        //     type: WS_CONNECTION_START
-        // });
+
         navigate(path);
 
         return () => {

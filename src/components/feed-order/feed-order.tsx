@@ -1,14 +1,10 @@
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './feed-order.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient, IWSOrder } from '../../utils/types';
+import { IIngredient, IWSOrder, RootState } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useEffect } from 'react';
 import { SWITCH_HEADER_ITEM } from '../../services/actions/navigation';
-
-interface IFeedOrder {
-    order: IWSOrder;
-}
 
 const getIngredientsFrequency = (ingredients: string[]) => {
     let dict: { [key: string]: number } = {};
@@ -33,10 +29,14 @@ const getIngredientsWithQuantity = (ids: string[], ingredients: IIngredient[]) =
     return ans;
 };
 
-const FeedOrder: React.FC<{ reducer: 'websocket' | 'websocketHistory',
-                            id: string | undefined}> = ({ reducer, id }) => {
+type TFeedOrder = {
+    reducer: 'websocket' | 'websocketHistory',
+    id: string | undefined,
+}
+
+const FeedOrder: React.FC<TFeedOrder> = ({ reducer, id }) => {
     const dispatch = useDispatch();
-    const order = useSelector((store: any) => store[reducer].orders.length ?
+    const order = useSelector((store: RootState) => store[reducer].orders.length ?
             store[reducer].orders.find((it: IWSOrder) => it['_id'] === id) :
             null
     );
@@ -58,7 +58,7 @@ const FeedOrder: React.FC<{ reducer: 'websocket' | 'websocketHistory',
     }, []);
 
     return (
-        order && <div className={styles.container}>
+        order ? <div className={styles.container}>
             <div className={styles.order__details}>
                 <span className={`${styles.order__number} text text_type_digits-default mb-10`}>#{order.number}</span>
                 <span className="text text_type_main-medium mb-3">{order.name}</span>
@@ -95,7 +95,7 @@ const FeedOrder: React.FC<{ reducer: 'websocket' | 'websocketHistory',
                     </div>
                 </div>
             </div>
-        </div>
+        </div> : null
     )
 }
 

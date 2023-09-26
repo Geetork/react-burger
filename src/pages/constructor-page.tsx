@@ -5,12 +5,13 @@ import Main from '../components/main/main';
 
 import appStyles from './pages.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { RootState } from '../utils/types';
 
 const ConstructorPage: React.FC = () => {
     const path = window.location.pathname;
     const navigate = useNavigate();
 
-    const { data, ingredientsFailed } = useSelector((store: any) => ({
+    const { data, ingredientsFailed } = useSelector((store: RootState) => ({
         data: store.ingredients.data,
         ingredientsFailed: store.ingredients.ingredientsFailed,
     }));

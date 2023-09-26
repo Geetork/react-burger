@@ -13,7 +13,7 @@ import { ConstructorPage,
      } from '../../pages/index';
 import { ProtectedRouterElement } from '../../components/protected-router-element/protected-router-element';
 import AppHeader from '../app-header/app-header';
-import { getIngredients } from '../../services/actions/burger-ingredients';
+import { AppDispatch, getIngredients } from '../../services/actions/burger-ingredients';
 
 const App: React.FC = () => { 
     const location = useLocation();
@@ -21,7 +21,7 @@ const App: React.FC = () => {
     const locationState = location.state as { background?: Location };
     const background = locationState?.background;
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         dispatch(getIngredients());

@@ -1,3 +1,7 @@
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from "../../utils/types";
+import { TAuthorization } from './authorization';
+
 export const SWITCH_PROFILE_NAVIGATION_ITEM: 'SWITCH_PROFILE_NAVIGATION_ITEM' = 'SWITCH_PROFILE_NAVIGATION_ITEM';
 export const SWITCH_HEADER_ITEM: 'SWITCH_HEADER_ITEM' = 'SWITCH_HEADER_ITEM';
 export const SET_NAVIGATION_INITIAL_STATE: 'SET_NAVIGATION_INITIAL_STATE' = 'SET_NAVIGATION_INITIAL_STATE';
@@ -19,3 +23,5 @@ export interface ISetNavigationInitialState {
 export type TNavigationActions = ISwitchProfileNavitionItem |
     ISwitchHeaderItem |
     ISetNavigationInitialState;
+
+export type AppDispatch = ThunkDispatch<RootState, unknown, TNavigationActions | TAuthorization>;

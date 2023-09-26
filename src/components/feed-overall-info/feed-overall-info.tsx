@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { IWSOrder } from '../../utils/types';
+import { IWSOrder, RootState } from '../../utils/types';
 import styles from './feed-overall-info.module.css';
 
 const FeedOverallInfo = () => {
-    const { total, totalToday, readyOrders, inProgressOrders } = useSelector((store: any) => ({
+    const { total, totalToday, readyOrders, inProgressOrders } = useSelector((store: RootState) => ({
         total: store.websocket.total,
         totalToday: store.websocket.totalToday,
         readyOrders: store.websocket.orders.filter((order: IWSOrder) => order.status === 'done'),

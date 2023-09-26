@@ -23,7 +23,7 @@ const initialState: TBurgerIngredientsState = {
     currentModalIngredient: null,
 }
 
-export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions) : TBurgerIngredientsState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -53,7 +53,7 @@ export const burgerIngredientsReducer = (state = initialState, action: TBurgerIn
         case CLOSE_INGREDIENT_MODAL: {
             return {
                 ...state,
-                currentModalIngredient: {}
+                currentModalIngredient: null
             }
         }
         case RESET_INGREDIENTS_COUNTERS: {

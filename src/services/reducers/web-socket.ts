@@ -17,7 +17,7 @@ import { WS_CONNECTION_START,
 
 type TWSState = {
     wsConnected: boolean,
-    orders: IWSOrder[],
+    orders: ReadonlyArray<IWSOrder>,
     total: number,
     totalToday: number,
     error: boolean,
@@ -32,12 +32,12 @@ const initialState: TWSState = {
     error: false,
 }
 
-export const wsReducer = (state = initialState, action: TWSActions) => {
+export const wsReducer = (state = initialState, action: TWSActions): TWSState => {
     switch (action.type) {
       case WS_CONNECTION_SUCCESS:
         return {
           ...state,
-          error: undefined,
+          error: false,
           wsConnected: true,
         };
   
@@ -51,14 +51,13 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
       case WS_CONNECTION_CLOSED:
         return {
           ...state,
-          error: undefined,
+          error: false,
           wsConnected: false
         };
   
       case WS_GET_MESSAGE:
         return {
           ...state,
-          error: undefined,
           orders: [ ...action.payload?.orders ],
           total: action.payload.total,
           totalToday: action.payload.totalToday,

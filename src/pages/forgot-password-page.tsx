@@ -4,15 +4,15 @@ import { useEffect} from 'react';
 import { Navigate, useLocation } from "react-router-dom";
 import ForgotPassword from "../components/forgot-password/forgot-password";
 import pageStyles from './pages.module.css';
+import { AppDispatch } from "../services/actions/navigation";
 
 const ForgotPasswordPage: React.FC = () => {
     const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
     const emailRequest = useSelector((store: any) => store.resetPassword.gotEmail);
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

@@ -4,9 +4,10 @@ import { SWITCH_HEADER_ITEM } from '../../services/actions/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import appHeaderStyles from './app-header.module.css';
 import { useEffect } from 'react';
+import { RootState } from '../../utils/types';
 
 const AppHeader: React.FC = () => {
-    const current = useSelector((store: any) => store.navigation.header);
+    const current = useSelector((store: RootState) => store.navigation.header);
     const dispatch = useDispatch();
 
     const switchTab = (current: string) => {

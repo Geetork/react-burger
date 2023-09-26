@@ -7,10 +7,11 @@ import { SWITCH_HEADER_ITEM } from '../services/actions/navigation';
 import Feed from '../components/feed/feed';
 import { WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_START } from '../services/actions/web-socket';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../utils/types';
 
 const ProfilePage: React.FC = () => {
     const dispatch = useDispatch();
-    const currentTab = useSelector((store: any) => store.navigation.profile);
+    const currentTab = useSelector((store: RootState) => store.navigation.profile);
     const navigate = useNavigate();
     const location = window.location.pathname;
 
@@ -19,9 +20,6 @@ const ProfilePage: React.FC = () => {
             type: SWITCH_HEADER_ITEM,
             current: 'profile'
         });
-        // dispatch({
-        //     type: WS_HISTORY_CONNECTION_START,
-        // });
 
         navigate(location);
 

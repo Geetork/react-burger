@@ -9,16 +9,17 @@ import TotalPrice from './total-price';
 import ConstructorIngredient from './constructor-ingredient';
 
 import constructorStyles from './burger-constructor.module.css';
-import { increaseCounter, decreaseCounter } from '../../services/actions/burger-ingredients';
+import { increaseCounter, decreaseCounter, AppDispatch } from '../../services/actions/burger-ingredients';
 import { makeOrder, 
          MOVE_INGREDIENT,
          REMOVE_INGREDIENT,
          ADD_BUN,
-         ADD_INGREDIENT} from '../../services/actions/burger-сonstructor';
+         ADD_INGREDIENT,
+         } from '../../services/actions/burger-сonstructor';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient, IDroppedIngredient, IBun } from '../../utils/types';
+import { IIngredient, IDroppedIngredient, IBun, RootState } from '../../utils/types';
 
-const constructorIngredients = (bun: IBun | null, filling: Array<IDroppedIngredient>): IDroppedIngredient[] => (
+const constructorIngredients = (bun: IBun | null, filling: IDroppedIngredient[]): IDroppedIngredient[] => (
     bun ?
         [{...bun, id: bun.idTop},
             ...filling,
@@ -28,21 +29,18 @@ const constructorIngredients = (bun: IBun | null, filling: Array<IDroppedIngredi
 
 const BurgerConstructor: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const isAuthorized = useSelector((store: any) => store.authorization.isAuthorized);
+    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
     const navigate = useNavigate();
 
-    const { bun, filling } = useSelector((store: any) => {
-        const ingredients = store.constructorIngredients;
-        return {
-            filling: ingredients.constructorIngredients,
-            bun: ingredients.bun,
-        }
-    });
+    const { bun, filling } = useSelector((store: RootState) => ({
+        filling: store.constructorIngredients.constructorIngredients,
+        bun: store.constructorIngredients.bun,     
+    }));
 
-    const burgerIngredients = useSelector((store: any) => 
+    const burgerIngredients = useSelector((store: RootState) => 
         store.ingredients.data);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [, dropTargetRef] = useDrop({
         accept: ['burgerIngredient'],
@@ -51,7 +49,7 @@ const BurgerConstructor: React.FC = () => {
         }
     });
 
-    const onDropHandler = (bun: IBun | null, data: IIngredient[], ingredient: IIngredient) => {
+    const onDropHandler = (bun: IBun | null, data: ReadonlyArray<IIngredient>, ingredient: IIngredient) => {
         ingredient.type === 'bun' ?
             dispatch({
                 type: ADD_BUN,
@@ -66,22 +64,20 @@ const BurgerConstructor: React.FC = () => {
             });
         ingredient.type === 'bun' &&
             bun &&
-            //@ts-ignore
             dispatch(decreaseCounter(data, bun._id));
         
-        //@ts-ignore
+
         dispatch(increaseCounter(data, ingredient._id));
     };
 
     const handleOpenModal = () => {
         const ingredients = [bun, ...filling, bun]
-            .map(ingredient => ingredient._id);
+            .map(ingredient => ingredient?._id);
 
         if (!isAuthorized) {
             navigate('/login');
         } else {
-            //@ts-ignore
-            dispatch(makeOrder(ingredients))
+            dispatch(makeOrder(ingredients as string[]))
             setIsVisible(true);
         };
     };
@@ -97,7 +93,6 @@ const BurgerConstructor: React.FC = () => {
                 type: REMOVE_INGREDIENT,
                 id 
             });
-            //@ts-ignore
             dispatch(decreaseCounter(burgerIngredients, _id));
         }
     };

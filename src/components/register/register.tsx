@@ -5,19 +5,20 @@ import { Link } from 'react-router-dom';
 import styles from './register.module.css';
 import { SET_FORM_VALUE } from "../../services/actions/authorization";
 import { register } from "../../services/actions/authorization";
+import { RootState } from "../../utils/types";
+import { AppDispatch } from "../../services/actions/navigation";
 
 const Register: React.FC = () => {
-    const { name, email, pass } = useSelector((store: any) => ({
+    const { name, email, pass } = useSelector((store: RootState) => ({
         name: store.authorization.name,
         email: store.authorization.email,
         pass: store.authorization.password
     }));
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(register(name, email, pass));
     };
 

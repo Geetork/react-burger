@@ -1,8 +1,7 @@
-import { inherits } from "util";
+import { ThunkDispatch } from "redux-thunk";
 import { getIngredients as getIngredientsAPI } from "../../utils/api";
-import { IIngredient } from "../../utils/types";
-import { GET_USER_INFO_FAILED } from "./authorization";
-import { GET_CONSTRUCTOR_INGREDIENTS } from "./burger-сonstructor";
+import { IIngredient, RootState } from "../../utils/types";
+import { GET_CONSTRUCTOR_INGREDIENTS, TBurgerConstructorActions } from "./burger-сonstructor";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -12,6 +11,8 @@ export const OPEN_INGREDIENT_MODAL: 'OPEN_INGREDIENT_MODAL' = 'OPEN_INGREDIENT_M
 export const CLOSE_INGREDIENT_MODAL: 'CLOSE_INGREDIENT_MODAL' = 'CLOSE_INGREDIENT_MODAL';
 
 export const RESET_INGREDIENTS_COUNTERS = 'RESET_INGREDIENTS_COUNTERS';
+
+export const DEFAULT: 'DEFAULT' = 'DEFAULT';
 
 export interface IGetIngreduentsAction {
     readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -39,15 +40,22 @@ export interface IResetIngredientsCounters {
     readonly type: typeof RESET_INGREDIENTS_COUNTERS;
 }
 
+export interface IDefault {
+    readonly type: typeof DEFAULT;
+}
+
 export type TBurgerIngredientsActions = IGetIngreduentsAction |
     IGetIngredientsSuccess |
     IGetIngredientsFailed |
     IOpenIngredientModal |
     ICloseIngredientModal |
-    IResetIngredientsCounters;
+    IResetIngredientsCounters |
+    IDefault;
 
-export function getIngredients(): any {
-    return function(dispatch: any): any {
+export type AppDispatch = ThunkDispatch<RootState, unknown, TBurgerConstructorActions | TBurgerIngredientsActions>;
+
+export function getIngredients() {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });
@@ -68,7 +76,7 @@ export function getIngredients(): any {
     }
 };
 
-export function decreaseCounter(data: IIngredient[], id: string) {
+export function decreaseCounter(data: ReadonlyArray<IIngredient>, id: string) {
     const ingredient = data.find(item =>
         item._id === id);
     
@@ -78,12 +86,12 @@ export function decreaseCounter(data: IIngredient[], id: string) {
         ingredient['count'] -= num;
     }
 
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({ type: 'DEFAULT' });
     };
 };
 
-export function increaseCounter(data: IIngredient[], id: string) {
+export function increaseCounter(data: ReadonlyArray<IIngredient>, id: string) {
     const ingredient = data.find(item =>
         item._id === id    
     );
@@ -96,7 +104,7 @@ export function increaseCounter(data: IIngredient[], id: string) {
             ingredient['count'] += num;
     }
 
-    return function(dispatch: any): any {
+    return function(dispatch: AppDispatch) {
         dispatch({ type: 'DEFAULT' });
     }
 };

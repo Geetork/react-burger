@@ -5,15 +5,17 @@ import { useNavigate } from "react-router-dom";
 import styles from './profile.module.css';
 import { SET_FORM_VALUE, changeUserInfo, getUserInfo } from "../../services/actions/authorization";
 import { useEffect } from "react";
+import { RootState } from "../../utils/types";
+import { AppDispatch } from "../../services/actions/navigation";
 
 const Profile: React.FC = () => {
-    const { name, email, pass } = useSelector((store: any) => ({
+    const { name, email, pass } = useSelector((store: RootState) => ({
         name: store.authorization.name,
         email: store.authorization.email,
         pass: store.authorization.password
     }));
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,17 +27,14 @@ const Profile: React.FC = () => {
     }
 
     const cancel = () => {
-        //@ts-ignore
         dispatch(getUserInfo());
     }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        //@ts-ignore
         dispatch(changeUserInfo(name, email, pass));
     }
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUserInfo());
     }, []);
 

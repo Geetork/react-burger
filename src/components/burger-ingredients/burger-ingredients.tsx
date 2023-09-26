@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient } from '../../utils/types';
+import { IIngredient, RootState } from '../../utils/types';
 
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -15,7 +15,7 @@ interface IBurgerIngredient {
 }
 
 const BurgerIngredient: React.FC<IBurgerIngredient> = ({ ingredient, handleOpenModal }) => {
-    const counter = useSelector((store: any) => 
+    const counter = useSelector((store: RootState) => 
         store.ingredients.data.find((item: IIngredient) => 
             item._id === ingredient._id)?.count);
 
@@ -83,7 +83,7 @@ const BurgerIngredients: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
 
-    const data = useSelector((store: any) => store.ingredients.data);
+    const data = useSelector((store: RootState) => store.ingredients.data);
 
     const handleOpenModal = () => {
         setIsVisible(true);
@@ -137,7 +137,7 @@ const BurgerIngredients: React.FC = () => {
                             </h2> 
                             <div className={ingredientsStyles.ingredients__list}>
                             {   
-                                data.map((ingredient: IIngredient, id: string) => {
+                                data.map((ingredient: IIngredient, id: number) => {
                                     if (ingredient.type === ingredientType[title as TIngredientType])
                                         return (
                                                 <BurgerIngredient
