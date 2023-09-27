@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient, RootState } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 interface IBurgerIngredient {
     ingredient: IIngredient;
@@ -15,11 +16,11 @@ interface IBurgerIngredient {
 }
 
 const BurgerIngredient: React.FC<IBurgerIngredient> = ({ ingredient, handleOpenModal }) => {
-    const counter = useSelector((store: RootState) => 
+    const counter = useAppSelector((store) => 
         store.ingredients.data.find((item: IIngredient) => 
             item._id === ingredient._id)?.count);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     const [{ isDrag }, dragRef] = useDrag({
@@ -83,7 +84,7 @@ const BurgerIngredients: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
 
-    const data = useSelector((store: RootState) => store.ingredients.data);
+    const data = useAppSelector((store) => store.ingredients.data);
 
     const handleOpenModal = () => {
         setIsVisible(true);

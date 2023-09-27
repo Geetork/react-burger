@@ -1,13 +1,13 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { IngredientDetailsContent } from "../components/ingredient-details/ingredient-details"
-import { useSelector } from "react-redux"
 import styles from './pages.module.css';
-import { IIngredient, RootState } from "../utils/types";
+import { IIngredient } from "../utils/types";
+import { useAppSelector } from "../utils/hooks";
 
 const IngredientPage: React.FC = () => {
     const { id } = useParams();
     
-    const ingredient = useSelector((store: RootState) => store.ingredients.data.length ?
+    const ingredient = useAppSelector((store) => store.ingredients.data.length ?
             store.ingredients.data.find((it: IIngredient) => it['_id'] === id) :
             null
     );

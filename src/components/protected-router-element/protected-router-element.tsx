@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
-import { RootState } from '../../utils/types';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../utils/hooks';
 
 export const ProtectedRouterElement: React.FC<{ element: React.ReactElement}> = ({ element }) => {
     const location = useLocation();
-    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
+    const isAuthorized = useAppSelector((store) => store.authorization.isAuthorized);
 
     location.pathname = window.location.pathname;
 

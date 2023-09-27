@@ -1,17 +1,15 @@
 import { Navigate, useLocation } from "react-router-dom";
 import ResetPassword from "../components/reset-password/reset-password";
 import pageStyles from './pages.module.css';
-import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
-import { RootState } from "../utils/types";
-import { AppDispatch } from "../services/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 
 const ResetPasswordPage: React.FC = () => {
-    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
-    const isPasswordReset = useSelector((store: RootState) => store.resetPassword.isPasswordReset);
+    const isAuthorized = useAppSelector((store) => store.authorization.isAuthorized);
+    const isPasswordReset = useAppSelector((store) => store.resetPassword.isPasswordReset);
     const location = useLocation();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const fromPage = location.state?.from?.pathname || '/';
 

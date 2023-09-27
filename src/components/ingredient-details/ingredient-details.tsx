@@ -1,7 +1,7 @@
-import { IIngredient, RootState } from "../../utils/types";
+import { IIngredient } from "../../utils/types";
 import Modal from "../modal/modal";
-import { useSelector } from 'react-redux';
 import ingredientDetailsStyles from './ingredient-details.module.css';
+import { useAppSelector } from "../../utils/hooks";
 
 interface IIngredientDetails {
     ingredient: IIngredient | null;
@@ -46,7 +46,7 @@ export const IngredientDetailsContent: React.FC<IIngredientDetails> = ({ ingredi
 }
 
 const IngredientDetails: React.FC<{onClose: () => void}> = ({ onClose }) => {
-    const ingredient = useSelector((store: RootState) => store.ingredients.currentModalIngredient);
+    const ingredient = useAppSelector((store) => store.ingredients.currentModalIngredient);
     
     return (
         <Modal title='Детали ингредиента'

@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { IWSOrder, RootState } from '../../utils/types';
+import { useAppSelector } from '../../utils/hooks';
+import { IWSOrder } from '../../utils/types';
 import styles from './feed-overall-info.module.css';
 
 const FeedOverallInfo = () => {
-    const { total, totalToday, readyOrders, inProgressOrders } = useSelector((store: RootState) => ({
+    const { total, totalToday, readyOrders, inProgressOrders } = useAppSelector((store) => ({
         total: store.websocket.total,
         totalToday: store.websocket.totalToday,
         readyOrders: store.websocket.orders.filter((order: IWSOrder) => order.status === 'done'),

@@ -1,16 +1,13 @@
 import { Navigate } from "react-router-dom";
-import AppHeader from "../components/app-header/app-header";
 import Register from "../components/register/register";
 import pageStyles from './pages.module.css';
-import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
 import { useEffect} from 'react';
-import { RootState } from "../utils/types";
-import { AppDispatch } from "../services/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 
 const RegisterPage: React.FC = () => {
-    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
-    const dispatch = useDispatch<AppDispatch>();
+    const isAuthorized = useAppSelector((store) => store.authorization.isAuthorized);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getUserInfo());

@@ -1,16 +1,16 @@
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Feed from '../components/feed/feed';
 import FeedOverallInfo from '../components/feed-overall-info/feed-overall-info';
 
 import styles from './pages.module.css';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/web-socket';
+import { WS_CONNECTION_CLOSED } from '../services/actions/web-socket';
 import { useNavigate } from 'react-router-dom';
 import { SWITCH_HEADER_ITEM } from '../services/actions/navigation';
+import { useAppDispatch } from '../utils/hooks';
 
 const FeedPage: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const path = window.location.pathname;
     const navigate = useNavigate();
 

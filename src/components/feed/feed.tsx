@@ -1,12 +1,12 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './feed.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { IIngredient, IWSOrder, RootState } from '../../utils/types';
+import { IWSOrder } from '../../utils/types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../modal/modal';
 import FeedOrder from '../feed-order/feed-order';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_START } from '../../services/actions/web-socket';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 export interface IOrder {
     ingredients: string[];
@@ -30,7 +30,7 @@ interface IWSGenOrder extends IWSOrder {
 }
 
 const Order: React.FC<IWSGenOrder> = (props) => {
-    const ingredients = useSelector((store: RootState) => store.ingredients.data);
+    const ingredients = useAppSelector((store) => store.ingredients.data);
     const [ orderIngredients, setOrderIngredients ] = useState<string[]>([]);
     const [ totalPrice, setTotalPrice ] = useState(0);
     const location = useLocation();
@@ -105,11 +105,11 @@ const Feed: React.FC<{ reducer: 'websocket' | 'websocketHistory'}> = ({ reducer 
     const wsUrl = `${URL}/all`;
     const wsHistoryUrl = `${URL}`;
 
-    const feed = useSelector((store: RootState) => store[reducer].orders);
+    const feed = useAppSelector((store) => store[reducer].orders);
     const [ isVisible, setIsVisible ] = useState(false);
     const [ visibleOrderId, setVisibleOrderId ] = useState('');
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onClose = () => {
         setIsVisible(false);

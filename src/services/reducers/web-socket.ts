@@ -2,8 +2,7 @@ import { IWSOrder } from "../../utils/types";
 
 import { TWSActions, TWSHistoryActions } from "../actions/web-socket";
 
-import { WS_CONNECTION_START,
-         WS_CONNECTION_SUCCESS,
+import { WS_CONNECTION_SUCCESS,
          WS_CONNECTION_ERROR,
          WS_CONNECTION_CLOSED,
          WS_GET_MESSAGE,

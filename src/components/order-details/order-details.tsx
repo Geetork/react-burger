@@ -1,11 +1,10 @@
-import { useSelector } from 'react-redux';
-
 import Loader from '../loader/loader';
 import Modal from '../modal/modal';
 import checkMark from './graphics.svg';
+import { useAppSelector } from '../../utils/hooks';
 
 const OrderDetails: React.FC<{onClose: () => void}> = ({ onClose }) => {
-    const { order, isLoading } = useSelector((store: any) => ({
+    const { order, isLoading } = useAppSelector((store) => ({
         order: store.constructorIngredients.order,
         isLoading: store.constructorIngredients.isLoading
     }));

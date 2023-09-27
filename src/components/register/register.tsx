@@ -1,21 +1,21 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import styles from './register.module.css';
 import { SET_FORM_VALUE } from "../../services/actions/authorization";
 import { register } from "../../services/actions/authorization";
-import { RootState } from "../../utils/types";
 import { AppDispatch } from "../../services/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 const Register: React.FC = () => {
-    const { name, email, pass } = useSelector((store: RootState) => ({
+    const { name, email, pass } = useAppSelector((store) => ({
         name: store.authorization.name,
         email: store.authorization.email,
         pass: store.authorization.password
     }));
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

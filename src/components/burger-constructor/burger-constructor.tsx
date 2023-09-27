@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop } from 'react-dnd';
 import { v4 } from 'uuid';
@@ -9,7 +8,7 @@ import TotalPrice from './total-price';
 import ConstructorIngredient from './constructor-ingredient';
 
 import constructorStyles from './burger-constructor.module.css';
-import { increaseCounter, decreaseCounter, AppDispatch } from '../../services/actions/burger-ingredients';
+import { increaseCounter, decreaseCounter } from '../../services/actions/burger-ingredients';
 import { makeOrder, 
          MOVE_INGREDIENT,
          REMOVE_INGREDIENT,
@@ -17,7 +16,8 @@ import { makeOrder,
          ADD_INGREDIENT,
          } from '../../services/actions/burger-сonstructor';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient, IDroppedIngredient, IBun, RootState } from '../../utils/types';
+import { IIngredient, IDroppedIngredient, IBun } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 const constructorIngredients = (bun: IBun | null, filling: IDroppedIngredient[]): IDroppedIngredient[] => (
     bun ?
@@ -29,18 +29,18 @@ const constructorIngredients = (bun: IBun | null, filling: IDroppedIngredient[])
 
 const BurgerConstructor: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
+    const isAuthorized = useAppSelector((store) => store.authorization.isAuthorized);
     const navigate = useNavigate();
 
-    const { bun, filling } = useSelector((store: RootState) => ({
+    const { bun, filling } = useAppSelector((store) => ({
         filling: store.constructorIngredients.constructorIngredients,
         bun: store.constructorIngredients.bun,     
     }));
 
-    const burgerIngredients = useSelector((store: RootState) => 
+    const burgerIngredients = useAppSelector((store) => 
         store.ingredients.data);
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [, dropTargetRef] = useDrop({
         accept: ['burgerIngredient'],

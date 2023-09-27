@@ -1,10 +1,10 @@
-import { IIngredient, RootState } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../utils/hooks';
 
 const TotalPrice: React.FC = () => {
-    const constructorIngredients = useSelector((store: RootState) => 
+    const constructorIngredients = useAppSelector((store) => 
         store.constructorIngredients);
 
     const totalPrice = useMemo(() => {

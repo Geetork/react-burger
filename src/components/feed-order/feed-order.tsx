@@ -1,10 +1,9 @@
-import { useLocation, useParams } from 'react-router-dom';
 import styles from './feed-order.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient, IWSOrder, RootState } from '../../utils/types';
-import { useDispatch, useSelector } from 'react-redux';
+import { IIngredient, IWSOrder } from '../../utils/types';
 import { useMemo, useEffect } from 'react';
 import { SWITCH_HEADER_ITEM } from '../../services/actions/navigation';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 const getIngredientsFrequency = (ingredients: string[]) => {
     let dict: { [key: string]: number } = {};
@@ -17,7 +16,7 @@ const getIngredientsFrequency = (ingredients: string[]) => {
     return dict;
 };
 
-const getIngredientsWithQuantity = (ids: string[], ingredients: IIngredient[]) => {
+const getIngredientsWithQuantity = (ids: string[], ingredients: ReadonlyArray<IIngredient>) => {
     const dict = getIngredientsFrequency(ids);
     let ans = [];
 
@@ -35,13 +34,13 @@ type TFeedOrder = {
 }
 
 const FeedOrder: React.FC<TFeedOrder> = ({ reducer, id }) => {
-    const dispatch = useDispatch();
-    const order = useSelector((store: RootState) => store[reducer].orders.length ?
+    const dispatch = useAppDispatch();
+    const order = useAppSelector((store) => store[reducer].orders.length ?
             store[reducer].orders.find((it: IWSOrder) => it['_id'] === id) :
             null
     );
 
-    const ingredients = useSelector((store: any) => store.ingredients.data);
+    const ingredients = useAppSelector((store) => store.ingredients.data);
     const ingredientsWithQuantity = order ? getIngredientsWithQuantity(order.ingredients, ingredients) : null;
 
     const getTotalPrice = useMemo(() => {

@@ -1,3 +1,4 @@
+import { Middleware } from 'redux';
 import { register as registerAPI,
          login as loginAPI,
          getUserInfo as getUserInfoAPI,
@@ -6,8 +7,9 @@ import { register as registerAPI,
          logout as logoutAPI,
         } from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
-import { AppDispatch, SWITCH_HEADER_ITEM } from './navigation';
-import { Middleware } from 'redux';
+import { SWITCH_HEADER_ITEM } from './navigation';
+import { AppDispatch } from '../../utils/hooks';
+import { ThunkAction } from 'redux-thunk';
 
 export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST';
 export const REGISTER_FAILED: 'REGISTER_FAILED' = 'REGISTER_FAILED';
@@ -235,8 +237,8 @@ export function changeUserInfo(name: string, email: string, password: string) {
     }
 }
 
-export function refreshToken(next: any) {
-    return function(dispatch: any) {
+export function refreshToken(next?: (dispatch: AppDispatch) => void) {
+    return function(dispatch: AppDispatch) {
         refreshTokenAPI()
         .then(res => {
             next && dispatch(next);

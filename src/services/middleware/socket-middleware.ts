@@ -41,7 +41,7 @@ export const socketMiddleware = (wsActions: TWSAllStoreActions): Middleware => {
             dispatch({ type: onMessage, payload: { ...restParsedData } });
           } else {
             parsedData.message === 'Invalid or missing token' &&
-              dispatch(refreshToken(null));
+              dispatch(refreshToken());
           }         
         };
 

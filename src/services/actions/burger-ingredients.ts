@@ -1,7 +1,7 @@
-import { ThunkDispatch } from "redux-thunk";
 import { getIngredients as getIngredientsAPI } from "../../utils/api";
-import { IIngredient, RootState } from "../../utils/types";
-import { GET_CONSTRUCTOR_INGREDIENTS, TBurgerConstructorActions } from "./burger-сonstructor";
+import { IIngredient } from "../../utils/types";
+import { GET_CONSTRUCTOR_INGREDIENTS } from "./burger-сonstructor";
+import { AppDispatch } from "../../utils/hooks";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -51,8 +51,6 @@ export type TBurgerIngredientsActions = IGetIngreduentsAction |
     ICloseIngredientModal |
     IResetIngredientsCounters |
     IDefault;
-
-export type AppDispatch = ThunkDispatch<RootState, unknown, TBurgerConstructorActions | TBurgerIngredientsActions>;
 
 export function getIngredients() {
     return function(dispatch: AppDispatch) {

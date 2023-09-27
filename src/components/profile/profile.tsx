@@ -1,21 +1,18 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 
 import styles from './profile.module.css';
 import { SET_FORM_VALUE, changeUserInfo, getUserInfo } from "../../services/actions/authorization";
 import { useEffect } from "react";
-import { RootState } from "../../utils/types";
-import { AppDispatch } from "../../services/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 const Profile: React.FC = () => {
-    const { name, email, pass } = useSelector((store: RootState) => ({
+    const { name, email, pass } = useAppSelector((store) => ({
         name: store.authorization.name,
         email: store.authorization.email,
         pass: store.authorization.password
     }));
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

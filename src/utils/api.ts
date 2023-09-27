@@ -4,8 +4,7 @@ import { TRefreshResponse,
          TLogout,
          TResetPassword,
          TOrderResponse,
-         TUserInfo,
-         IDroppedIngredient,         
+         TUserInfo,      
 } from './types';
 
 const URL = 'https://norma.nomoreparties.space/api';

@@ -2,15 +2,13 @@ import { Navigate, useLocation } from "react-router-dom";
 import Login from "../components/login/login";
 import { useEffect } from "react";
 import pageStyles from './pages.module.css';
-import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/authorization";
-import { RootState } from "../utils/types";
-import { AppDispatch } from "../services/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 
 const LoginPage: React.FC = () => {
-    const isAuthorized = useSelector((store: RootState) => store.authorization.isAuthorized);
+    const isAuthorized = useAppSelector((store) => store.authorization.isAuthorized);
     const location = useLocation();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const fromPage = location.state?.from?.pathname || '/';
 

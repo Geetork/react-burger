@@ -1,6 +1,5 @@
-import { Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { ConstructorPage,
         ForgotPasswordPage,
         LoginPage, 
@@ -13,7 +12,8 @@ import { ConstructorPage,
      } from '../../pages/index';
 import { ProtectedRouterElement } from '../../components/protected-router-element/protected-router-element';
 import AppHeader from '../app-header/app-header';
-import { AppDispatch, getIngredients } from '../../services/actions/burger-ingredients';
+import { getIngredients } from '../../services/actions/burger-ingredients';
+import { useAppDispatch } from '../../utils/hooks';
 
 const App: React.FC = () => { 
     const location = useLocation();
@@ -21,7 +21,7 @@ const App: React.FC = () => {
     const locationState = location.state as { background?: Location };
     const background = locationState?.background;
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getIngredients());
