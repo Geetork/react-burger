@@ -1,0 +1,49 @@
+.container {
+    width: 100%;
+}
+
+.orders {
+    height: 380px;
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
+    box-sizing: border-box;
+    margin-top: 100px;
+}
+
+.order_numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 272px;
+}
+
+.orders__ready {
+    color: #00CCCC;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.orders__in_progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scroll__container {
+    height: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+}
+
+.scroll__container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.orders__total {
+    display: flex;
+    flex-direction: column;
+}

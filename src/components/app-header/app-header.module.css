@@ -1,0 +1,42 @@
+.header {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #1C1C21;
+}
+
+.content {
+    height: 88px;
+    width: 1280px;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu__item {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.menu__first_item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.menu__second_item {
+    justify-content: center; 
+}
+
+.menu__third_item {
+    justify-content: flex-end;
+}
+
+.button {
+    text-decoration: none;
+    color: inherit;
+}
