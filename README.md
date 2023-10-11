@@ -1,5 +1,6 @@
 # React Burger Application
-Go to app https://geetork.github.io/react-burger/index.html
+Go to app https://geetork.github.io/react-burger/index.html.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
