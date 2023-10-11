@@ -71,6 +71,10 @@ export interface IGetUserInfoFailed {
     readonly type: typeof GET_USER_INFO_FAILED;
 }
 
+export interface IGetChangeUserInfoRequest {
+    readonly type: typeof GET_CHANGE_USER_INFO_REQUEST;
+}
+
 export interface IGetUserInfoSuccess {
     readonly type: typeof GET_USER_INFO_SUCCESS;
     readonly name: string;
@@ -113,6 +117,7 @@ export type TAuthorization = IRegisterAction |
     IGetUserInfoAction |
     IGetUserInfoFailed |
     IGetUserInfoSuccess |
+    IGetChangeUserInfoRequest |
     IGetChangeUserInfoAction |
     IChangeUserInfoFailed |
     IChangeUserInfoSuccess |
