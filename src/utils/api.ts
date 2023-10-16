@@ -9,6 +9,10 @@ import { TRefreshResponse,
 
 const URL = 'https://norma.nomoreparties.space/api';
 
+const WS_URL = 'wss://norma.nomoreparties.space/orders';
+export const wsUrl = `${WS_URL}/all`;
+export const wsHistoryUrl = `${WS_URL}`;
+
 const checkResponse = <T>(res: Response): Promise<T> => {
     if (res.ok) {
       return res.json();

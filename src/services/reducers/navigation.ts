@@ -4,7 +4,7 @@ import { SWITCH_PROFILE_NAVIGATION_ITEM,
          TNavigationActions } from "../actions/navigation";
 
 
-const initialState = {
+export const initialState = {
     profile: 'profile',
     header: 'constructor'
 }

@@ -21,7 +21,7 @@ type TBurgerConstructor = {
     isLoading: boolean,
 }
 
-const initialState: TBurgerConstructor = {
+export const initialState: TBurgerConstructor = {
     bun: null,
     constructorIngredients: [],
 

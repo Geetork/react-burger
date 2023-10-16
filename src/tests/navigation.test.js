@@ -1,18 +1,14 @@
 import { profileNavigationReducer } from '../services/reducers/navigation';
 import * as types from '../services/actions/navigation';
+import { initialState } from '../services/reducers/navigation';
 
 describe('Navigation reducer', () => {
-    const initalState = {
-        profile: 'profile',
-        header: 'constructor'
-    };
-
     test('initial State', () => {
-        expect(profileNavigationReducer(undefined, { type: undefined })).toEqual(initalState)
+        expect(profileNavigationReducer(undefined, { type: undefined })).toEqual(initialState)
     })
 
     test('SWITCH_PROFILE_NAVIGATION_ITEM', () => {
-        const state = initalState;
+        const state = initialState;
         expect(profileNavigationReducer(state, { type: types.SWITCH_PROFILE_NAVIGATION_ITEM,
             current: 'orders'
         })).toEqual({
@@ -22,7 +18,7 @@ describe('Navigation reducer', () => {
     })
 
     test('SWITCH_HEADER_ITEM', () => {
-        const state = initalState;
+        const state = initialState;
         expect(profileNavigationReducer(state, { type: types.SWITCH_HEADER_ITEM,
             current: 'feed'
         })).toEqual({
@@ -32,9 +28,9 @@ describe('Navigation reducer', () => {
     })
 
     test('SET_NAVIGATION_INITIAL_STATE', () => {
-        const state = initalState;
+        const state = initialState;
         expect(profileNavigationReducer(state, { type: types.SET_NAVIGATION_INITIAL_STATE })).toEqual({
-            ...initalState
+            ...initialState
         })
     })
 })

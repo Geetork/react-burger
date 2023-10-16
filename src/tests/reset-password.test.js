@@ -1,8 +1,9 @@
 import { resetPasswordReducer } from '../services/reducers/reset-password';
 import * as types from '../services/actions/reset-password';
+import { initialState } from '../services/reducers/reset-password';
 
 describe('Reset Password reducer', () => {
-    const initalState = {
+    const initialState = {
         request: false,
         requestFailed: false,
 
@@ -15,11 +16,11 @@ describe('Reset Password reducer', () => {
     };
 
     test('initial State', () => {
-        expect(resetPasswordReducer(undefined, { type: undefined })).toEqual(initalState)
+        expect(resetPasswordReducer(undefined, { type: undefined })).toEqual(initialState)
     })
 
     test('GET_RESET_PASSWORD_EMAIL_REQUEST', () => {
-        const state = initalState;
+        const state = initialState;
         expect(resetPasswordReducer(state, { type: types.GET_RESET_PASSWORD_EMAIL_REQUEST })).toEqual({
             ...state,
             request: true
@@ -27,7 +28,7 @@ describe('Reset Password reducer', () => {
     })
 
     test('GET_RESET_PASSWORD_EMAIL_SUCCESS', () => {
-        const state = initalState;
+        const state = initialState;
         expect(resetPasswordReducer(state, { type: types.GET_RESET_PASSWORD_EMAIL_SUCCESS })).toEqual({
             ...state,
             request: false,
@@ -36,7 +37,7 @@ describe('Reset Password reducer', () => {
     })
 
     test('RESET_PASSWORD_EMAIL_SUCCESS', () => {
-        const state = initalState;
+        const state = initialState;
         expect(resetPasswordReducer(state, { type: types.RESET_PASSWORD_EMAIL_SUCCESS })).toEqual({
             ...state,
             request: false,
@@ -45,7 +46,7 @@ describe('Reset Password reducer', () => {
     })
 
     test('GET_RESET_PASSWORD_EMAIL_FAILED', () => {
-        const state = initalState;
+        const state = initialState;
         expect(resetPasswordReducer(state, { type: types.GET_RESET_PASSWORD_EMAIL_FAILED })).toEqual({
             ...state,
             request: false,
@@ -54,7 +55,7 @@ describe('Reset Password reducer', () => {
     })
 
     test('RESET_PASSWORD_EMAIL_FAILED', () => {
-        const state = initalState;
+        const state = initialState;
         expect(resetPasswordReducer(state, { type: types.RESET_PASSWORD_EMAIL_FAILED })).toEqual({
             ...state,
             request: false,
@@ -63,7 +64,7 @@ describe('Reset Password reducer', () => {
     })
 
     test('SET_INITIAL_STATE', () => {
-        const state = initalState;
-        expect(resetPasswordReducer(state, { type: types.SET_INITIAL_STATE })).toEqual(initalState)
+        const state = initialState;
+        expect(resetPasswordReducer(state, { type: types.SET_INITIAL_STATE })).toEqual(initialState)
     })
 })

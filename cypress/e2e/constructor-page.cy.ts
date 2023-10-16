@@ -1,12 +1,15 @@
+const ingredientsSelector = '[class^=burger-ingredients_link]';
+const dropContainerSelector = '[class^=burger-constructor_scroll__container]';
+
 describe('App is available', () => {
     it('passes', () => {
-      cy.visit('http://localhost:3000')
+      cy.visit('')
     })
   })
 
 describe('Construcor page should contain constructor and list of ingredients', function () {
     before(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('')
     });
 
     it('pass', () => {
@@ -17,30 +20,33 @@ describe('Construcor page should contain constructor and list of ingredients', f
 
 describe('Making order', () => {
     before(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('')
     });
 
     it('pass', () => {
         const dataTransfer = new DataTransfer();
+        cy.get(ingredientsSelector).as('ingredient');
+        cy.get(dropContainerSelector).as('constructor');
 
-        cy.get('.burger-ingredients_link__LmvJj')
+        cy.get('@ingredient')
           .first()
           .trigger('dragstart', { dataTransfer });
         
-        cy.get('.burger-constructor_scroll__container__zfC6x')
+        cy.get('@constructor')
           .trigger('drop', { dataTransfer });
 
-        cy.get('.burger-ingredients_link__LmvJj')
+        cy.get('@ingredient')
           .last()
           .trigger('dragstart', { dataTransfer });
         
-        cy.get('.burger-constructor_scroll__container__zfC6x')
+        cy.get('@constructor')
           .trigger('drop', { dataTransfer });
 
-        cy.get('#ingredients__container > div:nth-child(2) > div > a:nth-child(1)')
+        cy.get('@ingredient')
+          .eq(5)
           .trigger('dragstart', { dataTransfer });
         
-        cy.get('.burger-constructor_scroll__container__zfC6x')
+        cy.get('@constructor')
           .trigger('drop', { dataTransfer });
 
         cy.get('button').contains('Оформить заказ').click();
@@ -62,24 +68,26 @@ describe('Making order', () => {
 
 describe('Modals work correctly', function () {
     before(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('')
     });
 
     it('pass', () => {
-        cy.get('.burger-ingredients_link__LmvJj')
+        cy.get(ingredientsSelector).as('ingredient');
+
+        cy.get('@ingredient')
           .first()
           .click()
           .wait(1000);
 
-        cy.get('#modal > div > div.modal_modal__sEyJW > div > div.modal_modal__header__L0UuA > svg')
+        cy.get('[class^=modal_modal__header] > svg')
             .trigger('click')
             .wait(1000);
 
-        cy.get('.burger-ingredients_link__LmvJj')
+        cy.get('@ingredient')
           .last()
           .click()
           .wait(1000);
 
-        cy.get('.modal_overlay__FS5nI').click({ force: true }).wait(1000);
+        cy.get('[class^=modal_overlay__]').click({ force: true }).wait(1000);
     });
 });

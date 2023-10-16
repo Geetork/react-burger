@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import styles from './pages.module.css';
 import { useDispatch } from 'react-redux';
+import { wsUrl, wsHistoryUrl } from '../utils/api';
 import { WS_CONNECTION_CLOSED,
          WS_CONNECTION_START,
          WS_HISTORY_CONNECTION_CLOSED,
@@ -11,13 +12,15 @@ import { WS_CONNECTION_CLOSED,
 
 const FeedOrderPage: React.FC<{ reducer: 'websocket' | 'websocketHistory' }> = ({ reducer }) => {
     const { id } = useParams();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({
             type: reducer === 'websocket' ?
                 WS_CONNECTION_START :
                 WS_HISTORY_CONNECTION_START,
+            payload: reducer === 'websocket' ?
+                wsUrl : wsHistoryUrl,
         })
 
         return () => {

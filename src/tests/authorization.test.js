@@ -1,24 +1,16 @@
 import { authorizationReducer } from '../services/reducers/authorization';
 import * as types from '../services/actions/authorization';
+import { initialState } from '../services/reducers/authorization';
+
 
 describe('Authorization reducer', () => {
-  const initalState = {
-    request: false,
-    requestFailed: false,
-  
-    name: '',
-    password: '',
-    email: '',
-    
-    isAuthorized: false,
-  };
 
   test('initial State', () => {
-    expect(authorizationReducer(undefined, { type: undefined })).toEqual(initalState)
+    expect(authorizationReducer(undefined, { type: undefined })).toEqual(initialState)
   })
 
   test('REGISTER_REQUEST', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.REGISTER_REQUEST })).toEqual({
       ...state,
       request: true,
@@ -26,7 +18,7 @@ describe('Authorization reducer', () => {
   })
 
   test('LOGIN_REQUEST', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.LOGIN_REQUEST })).toEqual({
       ...state,
       request: true,
@@ -34,7 +26,7 @@ describe('Authorization reducer', () => {
   })
 
   test('GET_USER_INFO_REQUEST', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.GET_USER_INFO_REQUEST })).toEqual({
       ...state,
       request: true,
@@ -42,7 +34,7 @@ describe('Authorization reducer', () => {
   })
 
   test('GET_CHANGE_USER_INFO_REQUEST', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.GET_CHANGE_USER_INFO_REQUEST })).toEqual({
       ...state,
       request: true,
@@ -50,7 +42,7 @@ describe('Authorization reducer', () => {
   })
 
   test('REGISTER_SUCCESS', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { 
       type: types.REGISTER_SUCCESS,
       isAuthorized: true
@@ -62,7 +54,7 @@ describe('Authorization reducer', () => {
   })
 
   test('LOGIN_SUCCESS', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { 
       type: types.LOGIN_SUCCESS,
       isAuthorized: true
@@ -74,7 +66,7 @@ describe('Authorization reducer', () => {
   })
 
   test('REGISTER_FAILED', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.REGISTER_FAILED })).toEqual({
       ...state,
       request: false,
@@ -83,7 +75,7 @@ describe('Authorization reducer', () => {
   })
 
   test('LOGIN_FAILED', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, { type: types.LOGIN_FAILED })).toEqual({
       ...state,
       request: false,
@@ -92,7 +84,7 @@ describe('Authorization reducer', () => {
   })
 
   test('SET_FORM_VALUE', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, {
       type: types.SET_FORM_VALUE,
       field: 'email',
@@ -104,7 +96,7 @@ describe('Authorization reducer', () => {
   })
 
   test('GET_USER_INFO_SUCCESS', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, {
       type: types.GET_USER_INFO_SUCCESS,
       name: 'galina',
@@ -119,7 +111,7 @@ describe('Authorization reducer', () => {
   })
 
   test('CHANGE_USER_INFO_SUCCESS', () => {
-    const state = initalState;
+    const state = initialState;
     expect(authorizationReducer(state, {
       type: types.CHANGE_USER_INFO_SUCCESS,
       name: 'galina',
@@ -134,7 +126,7 @@ describe('Authorization reducer', () => {
   })
 
   test('LOGOUT_SUCCESS', () => {
-    const state = initalState;
-    expect(authorizationReducer(state, { type: types.LOGOUT_SUCCESS })).toEqual(initalState)
+    const state = initialState;
+    expect(authorizationReducer(state, { type: types.LOGOUT_SUCCESS })).toEqual(initialState)
   })
 });

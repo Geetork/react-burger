@@ -1,22 +1,14 @@
 import { wsReducer, wsHistoryReducer } from '../services/reducers/web-socket';
 import * as types from '../services/actions/web-socket';
+import { initialState } from '../services/reducers/web-socket';
 
 describe('Web Socket reducer', () => {
-    const initalState = {
-        wsConnected: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-
-        error: false,
-    };
-
     test('initial State', () => {
-        expect(wsReducer(undefined, { type: undefined })).toEqual(initalState)
+        expect(wsReducer(undefined, { type: undefined })).toEqual(initialState)
     })
 
     test('WS_CONNECTION_SUCCESS', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsReducer(state, { type: types.WS_CONNECTION_SUCCESS })).toEqual({
             ...state,
             error: false,
@@ -25,7 +17,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_HISTORY_CONNECTION_SUCCESS', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsHistoryReducer(state, { type: types.WS_HISTORY_CONNECTION_SUCCESS })).toEqual({
             ...state,
             error: undefined,
@@ -34,7 +26,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_CONNECTION_ERROR', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsReducer(state, { type: types.WS_CONNECTION_ERROR })).toEqual({
             ...state,
             error: true,
@@ -43,7 +35,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_HISTORY_CONNECTION_ERROR', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsHistoryReducer(state, { type: types.WS_HISTORY_CONNECTION_ERROR })).toEqual({
             ...state,
             error: true,
@@ -52,7 +44,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_CONNECTION_CLOSED', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsReducer(state, { type: types.WS_CONNECTION_CLOSED })).toEqual({
             ...state,
             error: false,
@@ -61,7 +53,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_HISTORY_CONNECTION_CLOSED', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsHistoryReducer(state, { type: types.WS_HISTORY_CONNECTION_CLOSED })).toEqual({
             ...state,
             error: undefined,
@@ -70,7 +62,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_GET_MESSAGE', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsReducer(state, { type: types.WS_GET_MESSAGE,
             payload: {
                 orders: [
@@ -116,7 +108,7 @@ describe('Web Socket reducer', () => {
     })
 
     test('WS_HISTORY_GET_MESSAGE', () => {
-        const state = initalState;
+        const state = initialState;
         expect(wsHistoryReducer(state, { type: types.WS_HISTORY_GET_MESSAGE,
             payload: {
                 orders: [
