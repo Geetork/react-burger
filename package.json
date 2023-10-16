@@ -1,5 +1,6 @@
 {
   "name": "react-burger",
+  "homepage": "https://geetork.github.io/react-burger/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,7 +29,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress": "cypress open cache clear"
+    "cypress": "cypress open cache clear",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +58,7 @@
     "@types/react": "^18.2.19",
     "@types/react-dom": "^18.2.7",
     "@types/uuid": "^9.0.2",
-    "cypress": "^13.3.0"
+    "cypress": "^13.3.0",
+    "gh-pages": "^6.0.0"
   }
 }
