@@ -7,6 +7,7 @@ import Modal from '../modal/modal';
 import FeedOrder from '../feed-order/feed-order';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_START } from '../../services/actions/web-socket';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { wsUrl, wsHistoryUrl } from '../../utils/api';
 
 export interface IOrder {
     ingredients: string[];
@@ -101,10 +102,6 @@ const Order: React.FC<IWSGenOrder> = (props) => {
 }
 
 const Feed: React.FC<{ reducer: 'websocket' | 'websocketHistory'}> = ({ reducer }) => {
-    const URL = 'wss://norma.nomoreparties.space/orders';
-    const wsUrl = `${URL}/all`;
-    const wsHistoryUrl = `${URL}`;
-
     const feed = useAppSelector((store) => store[reducer].orders);
     const [ isVisible, setIsVisible ] = useState(false);
     const [ visibleOrderId, setVisibleOrderId ] = useState('');

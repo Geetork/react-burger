@@ -15,7 +15,7 @@ type TBurgerIngredientsState = {
     currentModalIngredient: IIngredient | null
 }
 
-const initialState: TBurgerIngredientsState = {
+export const initialState: TBurgerIngredientsState = {
     data: [],
     ingredientsRequest: false,
     ingredientsFailed: false,

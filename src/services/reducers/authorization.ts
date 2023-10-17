@@ -22,7 +22,7 @@ type TAutorizationState = {
     isAuthorized: boolean,
 };
 
-const initialState = {
+export const initialState = {
     request: false,
     requestFailed: false,
 

@@ -9,7 +9,7 @@ import { GET_RESET_PASSWORD_EMAIL_REQUEST,
          TResetPasswordActions
         } from "../actions/reset-password"
 
-const initialState = {
+export const initialState = {
     request: false,
     requestFailed: false,
 
